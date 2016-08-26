@@ -1,0 +1,23 @@
+link(rel='stylesheet', href="./stylesheets/user/userlist.css", type="text/css")
+link(href="2.css" type="text/css")
+h1.
+  User List
+ul.sendmaillist
+  li.title 发送
+  each user, i in userlist
+    li
+      label(data-href="mailto:#{user.email}" for="#{user.email}")= user.username
+      input.check(type="checkbox" id="#{user.email}")
+      span.check
+      //- span x
+ul.copymaillist  
+  li.title 抄送
+  each user, i in userlist
+    li
+      label(data-href="mailto:#{user.email}" for="copy#{user.email}")= user.username
+      input.check(type="checkbox" id="copy#{user.email}")
+      span.check
+      //- span x
+button.send 发送邮件
+script(src="bower_components/jquery/dist/jquery.min.js")
+script(src="javascripts/user/userlist.js")

@@ -1,0 +1,26 @@
+link(rel='stylesheet', href="/bower_components/bootstrap/dist/css/bootstrap.css", type="text/css")
+link(rel='stylesheet', href="/stylesheets/postBlog.css", type="text/css")
+div.postContext
+  include uploadForm
+  form.form-horizontal
+    div.form-group
+      lable.control-label.col-sm-1(for="title") 标题：
+      div.col-sm-3
+        input(placeholder="请填入标题").form-control#title
+    div.form-group
+      lable.control-label.col-sm-1(for="subject") 摘要：
+      div.col-sm-3
+        input(placeholder="请填入主题").form-control#subject
+    div.form-group
+      lable.control-label.col-sm-1(for="context") 正文：
+      div.col-sm-5.writeArea
+        textarea(placeholder="请开始写正文",rows="30").form-control#context
+      div.col-sm-5.showhtml
+        
+    div.form-group
+      div.col-sm-offset-2.col-sm-10
+        button.btn.btn-success.post 提交文章
+
+script(src="/bower_components/jquery/dist/jquery.min.js")
+script(src="/javascripts/showdown.js")
+script(src="/javascripts/postBlog.js")

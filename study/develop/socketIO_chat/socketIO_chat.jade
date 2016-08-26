@@ -1,0 +1,22 @@
+link(rel='stylesheet', href="stylesheets/socketIO_chat.css", type="text/css")
+div#username #{user.name}
+div#chatbox(style="display:none;")
+  div(style="background:#3d3d3d;height: 28px; line-height:28px;width: 100%;font-size:12px;color:#fff;")
+    div(style="line-height: 28px;color:#fff;")
+    span(style="text-align:left;margin-left:10px;") Websocket多人聊天室
+      span(style="float:right; margin-right:10px;")
+        span#showusername | 
+        span#logout |
+          a.logout(href="javascript:;" style="color:#fff;")  退出
+  div#doc
+    div#chat
+      div#message.message
+        div#onlinecount(style="background:#EFEFF4; font-size:12px; margin-top:10px; margin-left:10px; color:#666;")
+      div.input-box
+        div.input
+          input(type="text" maxlength="140" placeholder="请输入聊天内容，按Ctrl提交" id="content" name="content")
+        div.action
+          button(type="button" id="mjr_send") 提交
+script(src="bower_components/jquery/dist/jquery.min.js")
+script(src="javascripts/socket.io.js")
+script(src="javascripts/socketIO_chat.js")

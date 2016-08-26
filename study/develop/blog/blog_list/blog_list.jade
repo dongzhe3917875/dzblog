@@ -1,0 +1,32 @@
+link(rel='stylesheet', href="/stylesheets/socketIO_chat_home.css", type="text/css")
+link(rel='stylesheet', href="/bower_components/bootstrap/dist/css/bootstrap.css", type="text/css")
+div.body
+  include head
+  div.content
+    a.btn.btn-warning.post(href="/blog/post", target="_blank") 创建一篇文章
+    div.context_wrapper
+      div.sidebar
+        ul
+          each item, i in posts
+            li
+              a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+      div.sidebar_right
+        p in 
+      div.context
+        each item, i in posts
+          p 
+            h4 
+              a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+              if user.name == item.name
+                a.operation.edit(href="/blog/#{item.name}/#{item.time.day}/#{item.title}/edit") 编辑
+                a.operation.delete(href="javascript:;") 删除
+            p.info 
+              日期：
+              #{item.time.minute}
+            div
+              //- p.article !{item.post.slice(0, 250)}  
+              p.article #{item.subject} ...
+                a.seeAll(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") 查看全文
+            div.line
+script(src="/bower_components/jquery/dist/jquery.min.js")
+script(src="/javascripts/socketIO_chat_home.js")
