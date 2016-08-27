@@ -1,6 +1,6 @@
 var common = require("./common.js")
 $(".delete").on("click", function() {
-  var url = get_operate_url("remove");
+  var url = common.get_operate_url("remove");
   var obj = {
     url: url,
     success: function(data) {

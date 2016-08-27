@@ -5,7 +5,8 @@ module.exports = {
   // plugins: [commonsPlugin],
   entry: {
     "blog_home": './public/javascripts/socketIO_chat_home.js',
-    "datatable": './public/javascripts/datatable.js'
+    "datatable": './public/javascripts/datatable.js',
+    "blog_post": './public/javascripts/postBlog.js',
   },
   output: {
     path: 'public/dist',

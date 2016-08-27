@@ -1,3 +1,5 @@
+var showdown = require("./showdown.js");
+var common = require("./common.js");
 $(document).ready(function() {
   var ajax_func = function(obj) {
     var defaultOption = {
@@ -49,6 +51,7 @@ $(document).ready(function() {
   })
 
   $(".update").on("click", function(event) {
+    var url = common.get_operate_url("update");
     event.preventDefault();
     ajax_func({
       url: url,

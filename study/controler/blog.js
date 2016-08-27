@@ -44,6 +44,7 @@ exports.list = function(req, res) {
       if (err) {
         return res.redirect('/socketIO_chat/home');
       }
+      console.log(posts)
       res.render("blog_list", {
         user: req.session.user,
         posts: posts
