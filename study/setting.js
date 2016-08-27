@@ -1,6 +1,6 @@
 module.exports = {
   cookieSerect: "myproject",
   db: "mydemo",
-  host: "10.16.77.117",
+  host: "45.62.108.67",
   port: 27017
 }

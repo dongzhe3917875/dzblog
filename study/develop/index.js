@@ -1,5 +1,5 @@
 console.log("from index.js");
-var connection = new WebSocket('ws://10.16.77.117:1740', "echo-protocol");
+var connection = new WebSocket('ws://45.62.108.67:1740', "echo-protocol");
 
 connection.onopen = wsOpen;
 

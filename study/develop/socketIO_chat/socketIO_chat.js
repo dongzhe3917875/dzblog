@@ -160,7 +160,7 @@
         d.getElementById("message").clientHeight) + "px");
       this.scrollToBottom();
       //连接websocket后端服务器
-      this.socket = io.connect('ws://10.16.77.117:1741');
+      this.socket = io.connect('ws://45.62.108.67:1741');
       this.logout();
       //告诉服务器端有用户登录
       this.socket.emit('login', {
