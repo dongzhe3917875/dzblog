@@ -21,3 +21,12 @@ export default {
   }
 }
 </script>
+<!--  It is achieved by using PostCSS to transform the following: -->
+<!-- You can include both scoped and non-scoped styles in the same component: -->
+<style scoped>
+
+  input {
+    color: #ff000f;
+    border: 1px solid yellow;
+  }
+</style>

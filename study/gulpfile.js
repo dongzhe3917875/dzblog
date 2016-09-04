@@ -5,6 +5,8 @@ var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
 var concat = require('gulp-concat');
+var rf=require("fs");
+
 gulp.task("less", function() {
   return gulp.src("develop/**/*.less")
     .pipe(less())
@@ -54,7 +56,17 @@ gulp.task('templates', function() {
 //     .pipe(gulp.dest("public/javascripts"))
 // })
 gulp.task("start", function() {
-  gulp.watch("develop/**/*.less", ['less']);
+  gulp.watch("develop/**/*.less", ['less']).on("change", function(e) {
+    console.log(e);
+    console.log("sssssssssss")
+    setTimeout(function() {
+      var data=rf.readFileSync(e.path,"utf-8");
+      console.log(data);
+      gulp.start('less');
+    }, 1000)
+    console.log("eeeeeeeeeeee")
+
+  });
   gulp.watch("develop/**/*.js", ['js']);
   gulp.watch("develop/**/*.jade", ['jade']);
   gulp.watch("develop/**/*.hbs", ['templates']);

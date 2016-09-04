@@ -2,6 +2,9 @@
   <div class="app">
     <component-a></component-a>
   </div>
+  <p>
+    dongzhe123456
+  </p>
 </template>
 
 <script>

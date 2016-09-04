@@ -1,7 +1,21 @@
 var express = require('express');
-var birds = require('./routes/bird');
 var path = require('path');
 var app = express();
+var webpack = require("webpack");
+var webpackDevMiddleware = require("webpack-dev-middleware");
+// var webpackHotMiddleware = require('webpack-hot-middleware');
+var webpack_config = require("./webpack.config.js")
+var compiler = webpack(webpack_config);
+
+app.use(webpackDevMiddleware(compiler, {
+    publicPath: webpack_config.output.publicPath,
+    stats: {
+      colors: true
+    }
+  }
+));
+// app.use(webpackHotMiddleware(compiler));
+var birds = require('./routes/bird');
 var mongo = require('mongodb');
 var monk = require('monk');
 var routes = require('./routes/index');
@@ -14,7 +28,7 @@ var vue_router = require('./routes/vue_router.js');
 var operate_svg = require('./routes/operate_svg');
 var session = require("express-session");
 var MongoStore = require("connect-mongo")(session);
-
+;
 
 // var storage = multer.diskStorage({
 //   destination: function(req, file, cb) {
@@ -30,6 +44,8 @@ var MongoStore = require("connect-mongo")(session);
 // });
 // var cpUpload = upload.any();
 // app.use(cpUpload);
+// webpack 中间件
+
 
 
 app.use(session({
