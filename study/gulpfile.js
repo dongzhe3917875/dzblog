@@ -9,13 +9,13 @@ var rf=require("fs");
 var delay = function(event) {
   return function(e) {
     console.log(e);
-    console.log("sssssssssss")
+    console.log("file upload begin")
     setTimeout(function() {
       var data=rf.readFileSync(e.path,"utf-8");
-      console.log(data);
+      console.log("file upload done...");
       gulp.start(event);
     }, 1000)
-    console.log("eeeeeeeeeeee")
+    console.log("file upload begin...")
   }
 }
 
@@ -69,7 +69,7 @@ gulp.task('templates', function() {
 // })
 gulp.task("start", function() {
   gulp.watch("develop/**/*.less", ['less']).on("change", delay('less'));
-  gulp.watch("develop/**/*.js", ['js']);
+  gulp.watch("develop/**/*.js", ['js']).on("change", delay('js'));
   gulp.watch("develop/**/*.jade", ['jade']);
   gulp.watch("develop/**/*.hbs", ['templates']);
   gulp.watch("develop/**/*.png", ['image']);
