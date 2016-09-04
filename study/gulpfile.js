@@ -26,6 +26,11 @@ gulp.task("image", function() {
     .pipe(flatten())
     .pipe(gulp.dest("public/images"))
 })
+gulp.task("vue", function() {
+  return gulp.src("develop/**/*.vue")
+    .pipe(flatten())
+    .pipe(gulp.dest("public/components"))
+})
 gulp.task('templates', function() {
   gulp.src('develop/**/*.hbs')
     .pipe(handlebars())
@@ -54,8 +59,9 @@ gulp.task("start", function() {
   gulp.watch("develop/**/*.jade", ['jade']);
   gulp.watch("develop/**/*.hbs", ['templates']);
   gulp.watch("develop/**/*.png", ['image']);
+  gulp.watch("develop/**/*.vue", ['vue']);
 })
 
-gulp.task("default", ['less', 'js', 'jade', 'templates', 'image'], function() {
+gulp.task("default", ['less', 'js', 'jade', 'templates', 'image', 'vue'], function() {
   gulp.start('start');
 })

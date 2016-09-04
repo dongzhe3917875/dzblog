@@ -10,6 +10,7 @@ var flash = require("connect-flash");
 var settings = require("./setting");
 var blog = require('./routes/blog');
 var datatable = require('./routes/dataTable.js');
+var vue_router = require('./routes/vue_router.js');
 var operate_svg = require('./routes/operate_svg');
 var session = require("express-session");
 var MongoStore = require("connect-mongo")(session);
@@ -120,7 +121,7 @@ app.use('/', routes);
 app.use('/', test);
 app.use('/', datatable);
 app.use('/blog', blog);
-
+app.use('/', vue_router);
 app.use('/', operate_svg);
 app.route('/book')
   .get(function(req, res) {
