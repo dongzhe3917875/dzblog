@@ -13,6 +13,7 @@ var delay = function(event) {
     setTimeout(function() {
       var data = rf.readFileSync(e.path, "utf-8");
       console.log(data);
+      console.log("file upload end")
       gulp.start(event);
     }, 500)
     console.log("file upload begin...")

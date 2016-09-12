@@ -17,6 +17,8 @@ $(".context").on("click", ".delete_confirm", function(event) {
       alert(message);
       if (data.success) {
         article_item.remove();
+        $(".sidebar").find("[href='" + article_item.data("url") + "']")
+          .parent().remove();
       }
     }
   }
