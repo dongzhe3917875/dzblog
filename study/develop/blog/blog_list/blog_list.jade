@@ -5,7 +5,9 @@ link(rel='stylesheet', href="/bower_components/font-awesome/css/font-awesome.css
 div.body
   include head
   div.content
-    a.btn.btn-warning.post(href="/blog/post", target="_blank") 创建一篇文章
+    each item, i in posts
+      if user.name == item.name && i == 0
+        a.btn.btn-warning.post(href="/blog/post", target="_blank") 创建一篇文章
     div.context_wrapper
       div.sidebar
         ul

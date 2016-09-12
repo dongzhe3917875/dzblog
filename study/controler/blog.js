@@ -19,7 +19,7 @@ exports.post_blog = function(req, res) {
     }
     return res.send({
       success: "发表成功！",
-      location: "/blog/home"
+      location: "/blog/" + currentUser.name
     })
   })
 }

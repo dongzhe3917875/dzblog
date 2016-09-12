@@ -72,9 +72,10 @@ gulp.task("start", function() {
   gulp.watch("develop/**/*.less", ['less']).on("change", delay('less'));
   gulp.watch("develop/**/*.js", ['js']).on("change", delay('js'));
   gulp.watch("develop/**/*.jade", ['jade']).on("change", delay('jade'));
-  gulp.watch("develop/**/*.hbs", ['templates']);
-  gulp.watch("develop/**/*.png", ['image']);
-  gulp.watch("develop/**/*.vue", ['vue']);
+  gulp.watch("develop/**/*.hbs", ['templates']).on("change", delay(
+    'templates'));
+  gulp.watch("develop/**/*.png", ['image']).on("change", delay('image'));
+  gulp.watch("develop/**/*.vue", ['vue']).on("change", delay('vue'));
 })
 
 gulp.task("default", ['less', 'js', 'jade', 'templates', 'image', 'vue'],
