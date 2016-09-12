@@ -5,16 +5,16 @@ var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
 var concat = require('gulp-concat');
-var rf=require("fs");
+var rf = require("fs");
 var delay = function(event) {
   return function(e) {
     console.log(e);
     console.log("file upload begin")
     setTimeout(function() {
-      var data=rf.readFileSync(e.path,"utf-8");
-      console.log("file upload done...");
+      var data = rf.readFileSync(e.path, "utf-8");
+      console.log(data);
       gulp.start(event);
-    }, 1000)
+    }, 500)
     console.log("file upload begin...")
   }
 }
@@ -70,12 +70,13 @@ gulp.task('templates', function() {
 gulp.task("start", function() {
   gulp.watch("develop/**/*.less", ['less']).on("change", delay('less'));
   gulp.watch("develop/**/*.js", ['js']).on("change", delay('js'));
-  gulp.watch("develop/**/*.jade", ['jade']);
+  gulp.watch("develop/**/*.jade", ['jade']).on("change", delay('jade'));
   gulp.watch("develop/**/*.hbs", ['templates']);
   gulp.watch("develop/**/*.png", ['image']);
   gulp.watch("develop/**/*.vue", ['vue']);
 })
 
-gulp.task("default", ['less', 'js', 'jade', 'templates', 'image', 'vue'], function() {
-  gulp.start('start');
-})
+gulp.task("default", ['less', 'js', 'jade', 'templates', 'image', 'vue'],
+  function() {
+    gulp.start('start');
+  })

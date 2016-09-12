@@ -19,7 +19,7 @@ exports.post_blog = function(req, res) {
     }
     return res.send({
       success: "发表成功！",
-      location: "/socketIO_chat/home"
+      location: "/blog/home"
     })
   })
 }
@@ -38,11 +38,11 @@ exports.upload = function(req, res, next) {
 exports.list = function(req, res) {
   User.get(req.params.name, function(err, user) {
     if (!user) {
-      res.redirect('/socketIO_chat/home');
+      res.redirect('/blog/home');
     }
     Post.getAll(user.name, function(err, posts) {
       if (err) {
-        return res.redirect('/socketIO_chat/home');
+        return res.redirect('/blog/home');
       }
       console.log(posts)
       res.render("blog_list", {
@@ -109,7 +109,18 @@ exports.update_post = function(req, res) {
     })
 }
 
-exports.remove = function(req, res) {
+exports.remove_post = function(req, res) {
   var currentUser = req.session.user;
+  Post.remove(currentUser.name, req.params.day, req.params.title, function(
+    err) {
+    if (err) {
+      return res.send({
+        error: err
+      })
+    }
+    return res.send({
+      success: "删除成功"
+    })
+  })
 
 }

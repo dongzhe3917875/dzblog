@@ -72,7 +72,7 @@ exports.register = function(req, res) {
         // res.redirect("/socketIO_chat/login");
         return res.send({
           success: "注册成功，请去登录",
-          location: "/socketIO_chat/login"
+          location: "/blog/login"
         })
       })
     }
@@ -110,6 +110,6 @@ exports.logout = function(req, res) {
   req.session.user = null;
   return res.send({
     success: "退出账户成功",
-    location: "/socketIO_chat/login"
+    location: "/blog/login"
   })
 }

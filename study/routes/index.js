@@ -15,15 +15,15 @@ router.get('/socketIO_chat', checkLogin);
 router.get('/socketIO_chat', demo.iochat);
 
 
-router.get('/socketIO_chat/login', uncheckLogin);
-router.get('/socketIO_chat/login', demo.iochat_login);
+router.get('/blog/login', uncheckLogin);
+router.get('/blog/login', demo.iochat_login);
 
-router.get('/socketIO_chat/register', uncheckLogin);
-router.get('/socketIO_chat/register', demo.iochat_register);
+router.get('/blog/register', uncheckLogin);
+router.get('/blog/register', demo.iochat_register);
 
 
-router.get('/socketIO_chat/home', checkLogin);
-router.get('/socketIO_chat/home', demo.home);
+router.get('/blog/home', checkLogin);
+router.get('/blog/home', demo.home);
 
 router.post("/reg", demo.register);
 router.post("/login", demo.login);
