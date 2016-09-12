@@ -1,4 +1,5 @@
 var Post = require('../models/blog.js');
+var Comment = require('../models/comments.js');
 var User = require('../models/user.js');
 exports.post = function(req, res) {
   res.render("postBlog", {})

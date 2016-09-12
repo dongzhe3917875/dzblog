@@ -12,6 +12,7 @@ div.body
             #{post.time.minute}
           div
             !{post.post}
+          include comment
 script(src="/bower_components/jquery/dist/jquery.min.js")
 //- script(src="/javascripts/socketIO_chat_home.js")
 script(src="/dist/blog_home.js")

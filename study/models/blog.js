@@ -29,7 +29,9 @@ Post.prototype.save = function(callback) {
     title: this.title,
     subject: this.subject,
     post: this.post,
-    markdown: this.markdown
+    markdown: this.markdown,
+    // 添加comments
+    comments:[]
   }
 
   mongodb.open(function(err, db) {

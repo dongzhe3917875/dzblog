@@ -1,0 +1,6 @@
+textarea(name='content',rows='5',cols='80')
+br
+a.btn.btn-success.comment_submit 提交
+each item, i in post.comments
+  p item.content
+  p #{user.name} 回复于 #{item.time}
