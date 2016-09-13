@@ -21,6 +21,8 @@ router.post('/post_blog', blog.post_blog);
 router.post('/upload', upload.single("file"), blog.upload);
 // router.get('/:name', checkLogin);
 router.get('/:name', blog.list);
+router.post('/:name/slice', blog.list_slice);
+
 // router.get('/:name/:day/:title', checkLogin);
 router.get('/:name/:day/:title', blog.listone);
 router.get('/:name/:day/:title/edit', checkLogin);

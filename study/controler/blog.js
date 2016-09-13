@@ -53,6 +53,23 @@ exports.list = function(req, res) {
     })
   })
 }
+exports.list_slice = function(req, res) {
+  User.get(req.params.name, function(err, user) {
+    if (!user) {
+      res.redirect('/blog/home');
+    }
+    Post.getAll(user.name, function(err, posts) {
+      if (err) {
+        return res.redirect('/blog/home');
+      }
+      console.log(posts)
+      return res.render("blog_list_paginator", {
+        user: req.session.user,
+        posts: posts
+      });
+    })
+  })
+}
 exports.listone = function(req, res) {
   Post.getOne(req.params.name, req.params.day, req.params.title, function(err,
     post) {

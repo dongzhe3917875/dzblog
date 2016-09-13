@@ -1,0 +1,22 @@
+each item, i in posts
+  div.article_item(data-url="/blog/#{item.name}/#{item.time.day}/#{item.title}") 
+    h4 
+      a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+      if user
+        if user.name == item.name
+          a.operation.edit(href="/blog/#{item.name}/#{item.time.day}/#{item.title}/edit") 编辑
+          a.operation.delete(href="javascript:;") 删除
+          span.delete_operation
+            
+            a.operation.delete_cancel(href="javascript:;") 取消
+            i.fa.fa-times-circle
+            a.operation.delete_confirm(href="javascript:;") 确定
+            i.fa.fa-check-circle
+    p.info 
+      日期：
+      #{item.time.minute}
+    div
+      //- p.article !{item.post.slice(0, 250)}  
+      p.article #{item.subject} ...
+        a.seeAll(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") 查看全文
+    div.line
