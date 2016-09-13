@@ -123,5 +123,31 @@ exports.remove_post = function(req, res) {
       success: "删除成功"
     })
   })
+}
+exports.comment_post = function(req, res) {
+  var currentUser = req.session.user;
+  var date = new Date();
+  var time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" +
+    date.getDate() + " " + date.getHours() + ":" + (date.getMinutes() <
+      10 ? '0' + date.getMinutes() : date.getMinutes());
+  var comment = {
+    name: currentUser.name,
+    time: time,
+    user: currentUser.name,
+    content: req.body.comment
+  }
 
+  var newComment = new Comment(req.params.name, req.params.day, req.params.title,
+    comment);
+  newComment.save(function(err) {
+    if (err) {
+      return res.send({
+        error: err
+      })
+    }
+    return res.send({
+      success: "评论成功",
+      value: comment.content
+    })
+  })
 }

@@ -1,6 +1,16 @@
-textarea(name='content',rows='5',cols='80')
-br
-a.btn.btn-success.comment_submit 提交
-each item, i in post.comments
-  p item.content
-  p #{user.name} 回复于 #{item.time}
+div.comment_area
+  if user
+    textarea(name='content',rows='5',cols='80',placeholder="评论至少5个字")
+    br
+    a.btn.btn-success.comment_submit 提交
+  else
+    p 只有登录用户才能评论 去
+      a(href="/blog/login") 登录
+  h4 评论区
+  ul.comment 
+    if post.comments
+      each item,i in post.comments
+        li 
+          p #{i+1}楼 #{item.content}
+          a(href="/blog/#{item.name}") #{item.name} 
+          span 回复于 #{item.time}

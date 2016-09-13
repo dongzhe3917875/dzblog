@@ -22,7 +22,7 @@ router.get('/blog/register', uncheckLogin);
 router.get('/blog/register', demo.iochat_register);
 
 
-router.get('/blog/home', checkLogin);
+// router.get('/blog/home', checkLogin);
 router.get('/blog/home', demo.home);
 
 router.post("/reg", demo.register);
