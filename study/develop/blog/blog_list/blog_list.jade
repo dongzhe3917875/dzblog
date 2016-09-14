@@ -1,5 +1,6 @@
 link(rel='stylesheet', href="/stylesheets/common.css", type="text/css")
 link(rel='stylesheet', href="/stylesheets/socketIO_chat_home.css", type="text/css")
+link(rel='stylesheet', href="/stylesheets/paginator.css", type="text/css")
 link(rel='stylesheet', href="/bower_components/bootstrap/dist/css/bootstrap.css", type="text/css")
 link(rel='stylesheet', href="/bower_components/font-awesome/css/font-awesome.css", type="text/css")
 div.body
@@ -41,6 +42,9 @@ div.body
                 a.seeAll(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") 查看全文
             div.line
         button.test_jade test_jade
+        div.paginate_wrapper
+          div.totalPage 共0条
+          div.paginate.pagination
 script(src="/bower_components/jquery/dist/jquery.min.js")
 //- script(src="/javascripts/socketIO_chat_home.js")
 script(src="/dist/blog_home.js")

@@ -62,11 +62,21 @@ exports.list_slice = function(req, res) {
       if (err) {
         return res.redirect('/blog/home');
       }
-      console.log(posts)
-      return res.render("blog_list_paginator", {
-        user: req.session.user,
-        posts: posts
-      });
+      require('express')().set('view engine', 'jade').render(
+        'blog_list_paginator', {
+          user: req.session.user,
+          posts: posts
+        },
+        function(err, html) {
+          res.send({
+            content: html,
+            total: posts.length
+          })
+        });
+      // return res.render("blog_list_paginator", {
+      //   user: req.session.user,
+      //   posts: posts
+      // });
     })
   })
 }

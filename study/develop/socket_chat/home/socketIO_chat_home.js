@@ -72,15 +72,17 @@ $(".logout").on("click", function() {
     }
   }
   common.ajax_func.call(null, obj);
-})
+});
+
+
 $(".test_jade").on("click", function() {
   var obj = {
     url: location.pathname + "/slice",
-    dataType: "html",
+    // dataType: "html",
     success: function(data) {
-      $(".context").html(data);
+      // $(".context").html(data);
+      console.log(data);
       var message = data.error || data.success;
-      alert(message);
       if (data.success) {
 
       }
