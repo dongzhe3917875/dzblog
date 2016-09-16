@@ -6,6 +6,7 @@ var Common = {
     return url
   },
   ajax_func: function(obj) {
+    var xhr = null;
     var defaultOption = {
       url: "",
       type: "POST",
@@ -17,7 +18,8 @@ var Common = {
     }
     var obj = $.extend(true, {},
       defaultOption, obj);
-    $.ajax(obj);
+    xhr = $.ajax(obj);
+    return xhr
   }
 }
 module.exports = Common;

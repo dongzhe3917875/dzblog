@@ -73,25 +73,80 @@ Post.getAll = function(name, callback) {
       if (name) {
         query.name = name;
       }
-      collection.find(query).sort({
-        time: -1
-      }).toArray(function(err, docs) {
-        mongodb.close();
-        if (err) {
-          return callback(err);
-        }
+      // count可以统计出query的个数， 用于返回总个数
+      collection.count(query, function(err, total) {
+        collection.find(query).sort({
+          time: -1
+        }).toArray(function(err, docs) {
+          mongodb.close();
+          if (err) {
+            return callback(err);
+          }
 
-        //支持markdown
-        // console.log(JSON.stringify(markdown))
-        // docs.forEach(function(ele) {
-        //   ele.post = markdown.toHTML(ele.post);
-        // })
-        callback(null, docs);
-        mongodb.close();
+          //支持markdown
+          // console.log(JSON.stringify(markdown))
+          // docs.forEach(function(ele) {
+          //   ele.post = markdown.toHTML(ele.post);
+          // })
+          callback(null, docs, total);
+          mongodb.close();
+        })
       })
+      // skip 跳过前多少个
+      // limit 请求的数量 这样就可以获取任何区间的数据了
+      // skip + limit用来返回数据
     });
   });
 }
+
+
+// 查看所有
+Post.getSlice = function(slice_obj, callback) {
+  var name = slice_obj.name;
+  var offset = slice_obj.offset;
+  var pageSize = slice_obj.pageSize;
+  mongodb.open(function(err, db) {
+    if (err) {
+      return callback(err)
+    }
+    db.collection("posts", function(err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      var query = {};
+      if (name) {
+        query.name = name;
+      }
+      // count可以统计出query的个数， 用于返回总个数
+      collection.count(query, function(err, total) {
+        collection.find(query, {
+          skip: offset,
+          limit: pageSize
+        }).sort({
+          time: -1
+        }).toArray(function(err, docs) {
+          mongodb.close();
+          if (err) {
+            return callback(err);
+          }
+
+          //支持markdown
+          // console.log(JSON.stringify(markdown))
+          // docs.forEach(function(ele) {
+          //   ele.post = markdown.toHTML(ele.post);
+          // })
+          callback(null, docs, total);
+          mongodb.close();
+        })
+      })
+      // skip 跳过前多少个
+      // limit 请求的数量 这样就可以获取任何区间的数据了
+      // skip + limit用来返回数据
+    });
+  });
+}
+
 
 // 查看单个
 Post.getOne = function(name, day, title, callback) {

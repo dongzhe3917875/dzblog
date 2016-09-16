@@ -1,4 +1,6 @@
-var common = require("./common.js")
+var common = require("./common.js");
+require("./jquery.paginator.js");
+var Paginator = require("./table_paginator.js")
 $(".context").on("click", ".delete_cancel", function(event) {
   $(event.target).parent().hide();
 })
@@ -89,4 +91,44 @@ $(".test_jade").on("click", function() {
     }
   }
   common.ajax_func.call(null, obj);
+})
+
+$(document).ready(function() {
+  var paginate = $(".paginate_wrapper .pagination");
+  var totalCountsText = $(".totalPage").text()
+  var totalCounts = totalCountsText && parseInt(/\d+/.exec(totalCountsText)[0]);
+  var currentPage = 1;
+  var offset = 0;
+  var pageSize = 5;
+  var xhr = null;
+  paginate.length &&　$.jqPaginator(paginate, {
+    totalCounts: totalCounts,
+    visiblePages: 3,
+    pageSize: pageSize,
+    currentPage: currentPage,
+    onPageChange: function(num, type) {
+      // 当点击过快的时候 如果上一次请求还未结束， 将上一次的请求abort掉
+      // 这样就能避免异步带来的问题
+      xhr && xhr.abort();
+      console.log(num, type);
+      offset =  pageSize * (num - 1);
+      var obj = {
+        url: location.pathname + "/slice",
+        data: {
+          offset: offset,
+          pageSize: pageSize
+        },
+        // dataType: "html",
+        success: function(data) {
+          $(".article_wrapper").html(data.content);
+          console.log(data);
+          var message = data.error || data.success;
+          if (data.success) {
+
+          }
+        }
+      }
+      xhr = common.ajax_func.call(null, obj);
+    }
+  });
 })

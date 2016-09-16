@@ -41,24 +41,62 @@ exports.list = function(req, res) {
     if (!user) {
       res.redirect('/blog/home');
     }
-    Post.getAll(user.name, function(err, posts) {
+    Post.getSlice({
+      name: user.name,
+      offset: 0,
+      pageSize: 5
+    }, function(err, posts, total) {
       if (err) {
         return res.redirect('/blog/home');
       }
-      console.log(posts)
+      // console.log(posts)
       res.render("blog_list", {
         user: req.session.user,
-        posts: posts
+        posts: posts,
+        total: total
       });
     })
   })
 }
 exports.list_slice = function(req, res) {
-  User.get(req.params.name, function(err, user) {
-    if (!user) {
-      res.redirect('/blog/home');
-    }
-    Post.getAll(user.name, function(err, posts) {
+  var offset = req.body.offset;
+  var pageSize = req.body.pageSize;
+  console.log(req.session.user.name, req.params.name);
+  if (req.session.user && (req.session.user.name == req.params.name)) {
+    User.get(req.params.name, function(err, user) {
+      if (!user) {
+        res.redirect('/blog/home');
+      }
+      Post.getSlice({
+        name: user.name,
+        offset: offset,
+        pageSize: pageSize
+      }, function(err, posts, total) {
+        if (err) {
+          return res.redirect('/blog/home');
+        }
+        require('express')().set('view engine', 'jade').render(
+          'blog_list_paginator', {
+            user: req.session.user,
+            posts: posts
+          },
+          function(err, html) {
+            res.send({
+              content: html,
+              total: total
+            })
+          });
+        // return res.render("blog_list_paginator", {
+        //   user: req.session.user,
+        //   posts: posts
+        // });
+      })
+    })
+  } else {
+    Post.getSlice({
+      offset: offset,
+      pageSize: pageSize
+    }, function(err, posts, total) {
       if (err) {
         return res.redirect('/blog/home');
       }
@@ -70,7 +108,7 @@ exports.list_slice = function(req, res) {
         function(err, html) {
           res.send({
             content: html,
-            total: posts.length
+            total: total
           })
         });
       // return res.render("blog_list_paginator", {
@@ -78,8 +116,10 @@ exports.list_slice = function(req, res) {
       //   posts: posts
       // });
     })
-  })
+  }
+
 }
+
 exports.listone = function(req, res) {
   Post.getOne(req.params.name, req.params.day, req.params.title, function(err,
     post) {

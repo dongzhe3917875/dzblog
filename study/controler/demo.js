@@ -14,15 +14,31 @@ exports.iochat_register = function(req, res) {
   res.render("socketIO_chat_register", {});
 }
 exports.home = function(req, res) {
-  Post.getAll(null, function(err, posts) {
+  Post.getSlice({
+    name: "",
+    offset: 0,
+    pageSize: 5
+  }, function(err, posts, total) {
     if (err) {
-      posts = []
+      console.log(err);
+      return res.redirect('/blog/home');
     }
+    // console.log(posts)
     res.render("socketIO_chat_home", {
       user: req.session.user,
-      posts: posts
+      posts: posts,
+      total: total
     });
-  });
+  })
+  // Post.getAll(null, function(err, posts) {
+  //   if (err) {
+  //     posts = []
+  //   }
+  //   res.render("socketIO_chat_home", {
+  //     user: req.session.user,
+  //     posts: posts
+  //   });
+  // });
 }
 var crypto = require('crypto');
 var User = require('../models/user.js');

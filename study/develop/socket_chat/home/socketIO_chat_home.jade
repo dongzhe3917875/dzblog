@@ -1,3 +1,4 @@
+link(rel='stylesheet', href="/stylesheets/paginator.css", type="text/css")
 link(rel='stylesheet', href="/stylesheets/socketIO_chat_home.css", type="text/css")
 link(rel='stylesheet', href="/bower_components/bootstrap/dist/css/bootstrap.css", type="text/css")
 div.body
@@ -13,20 +14,24 @@ div.body
       div.sidebar_right
         p in 
       div.context
-        each item, i in posts
-          p 
-            h4 
-              a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
-            p.info 
-              作者：
-              a(href="/blog/#{item.name}") #{item.name}；
-              日期：
-              #{item.time.minute}
-            div
-              //- p.article !{item.post.slice(0, 250)}  
-              p.article #{item.subject} ...
-                a.seeAll(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") 查看全文
-            div.line
+        div.article_wrapper
+          each item, i in posts
+            p 
+              h4 
+                a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+              p.info 
+                作者：
+                a(href="/blog/#{item.name}") #{item.name}；
+                日期：
+                #{item.time.minute}
+              div
+                //- p.article !{item.post.slice(0, 250)}  
+                p.article #{item.subject} ...
+                  a.seeAll(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") 查看全文
+              div.line
+        div.paginate_wrapper
+          div.totalPage 共#{total}条
+          div.paginate.pagination
 script(src="/bower_components/jquery/dist/jquery.min.js")
 //- script(src="/javascripts/jquery_validate.js")
 script(src="/dist/blog_home.js")

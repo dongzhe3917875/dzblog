@@ -1,8 +1,8 @@
 link(rel='stylesheet', href="/stylesheets/common.css", type="text/css")
-link(rel='stylesheet', href="/stylesheets/socketIO_chat_home.css", type="text/css")
 link(rel='stylesheet', href="/stylesheets/paginator.css", type="text/css")
 link(rel='stylesheet', href="/bower_components/bootstrap/dist/css/bootstrap.css", type="text/css")
 link(rel='stylesheet', href="/bower_components/font-awesome/css/font-awesome.css", type="text/css")
+link(rel='stylesheet', href="/stylesheets/socketIO_chat_home.css", type="text/css")
 div.body
   include head
   div.content
@@ -19,31 +19,32 @@ div.body
       div.sidebar_right
         p in 
       div.context
-        each item, i in posts
-          div.article_item(data-url="/blog/#{item.name}/#{item.time.day}/#{item.title}") 
-            h4 
-              a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
-              if user
-                if user.name == item.name
-                  a.operation.edit(href="/blog/#{item.name}/#{item.time.day}/#{item.title}/edit") 编辑
-                  a.operation.delete(href="javascript:;") 删除
-                  span.delete_operation
-                    
-                    a.operation.delete_cancel(href="javascript:;") 取消
-                    i.fa.fa-times-circle
-                    a.operation.delete_confirm(href="javascript:;") 确定
-                    i.fa.fa-check-circle
-            p.info 
-              日期：
-              #{item.time.minute}
-            div
-              //- p.article !{item.post.slice(0, 250)}  
-              p.article #{item.subject} ...
-                a.seeAll(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") 查看全文
-            div.line
-        button.test_jade test_jade
+        div.article_wrapper
+          each item, i in posts
+            div.article_item(data-url="/blog/#{item.name}/#{item.time.day}/#{item.title}") 
+              h4 
+                a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+                if user
+                  if user.name == item.name
+                    a.operation.edit(href="/blog/#{item.name}/#{item.time.day}/#{item.title}/edit") 编辑
+                    a.operation.delete(href="javascript:;") 删除
+                    span.delete_operation
+                      
+                      a.operation.delete_cancel(href="javascript:;") 取消
+                      i.fa.fa-times-circle
+                      a.operation.delete_confirm(href="javascript:;") 确定
+                      i.fa.fa-check-circle
+              p.info 
+                日期：
+                #{item.time.minute}
+              div
+                //- p.article !{item.post.slice(0, 250)}  
+                p.article #{item.subject} ...
+                  a.seeAll(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") 查看全文
+              div.line
+        //- button.test_jade test_jade
         div.paginate_wrapper
-          div.totalPage 共0条
+          div.totalPage 共#{total}条
           div.paginate.pagination
 script(src="/bower_components/jquery/dist/jquery.min.js")
 //- script(src="/javascripts/socketIO_chat_home.js")
