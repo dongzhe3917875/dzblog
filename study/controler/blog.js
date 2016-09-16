@@ -61,7 +61,6 @@ exports.list = function(req, res) {
 exports.list_slice = function(req, res) {
   var offset = req.body.offset;
   var pageSize = req.body.pageSize;
-  console.log(req.session.user.name, req.params.name);
   if (req.session.user && (req.session.user.name == req.params.name)) {
     User.get(req.params.name, function(err, user) {
       if (!user) {
