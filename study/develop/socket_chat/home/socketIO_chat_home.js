@@ -1,9 +1,15 @@
 var common = require("./common.js");
 require("./jquery.paginator.js");
 var Paginator = require("./table_paginator.js")
+require("common.css");
+require("paginator.css");
+require("socketIO_chat_home.css");
+// 删除取消
 $(".context").on("click", ".delete_cancel", function(event) {
   $(event.target).parent().hide();
 })
+
+// 删除确定
 $(".context").on("click", ".delete_confirm", function(event) {
   var article_item = $(event.target).parents(".article_item");
   var url = article_item.data("url") +
@@ -23,6 +29,8 @@ $(".context").on("click", ".delete_confirm", function(event) {
   }
   common.ajax_func.call(null, obj);
 })
+
+// 删除显示
 $(".delete").on("click", function() {
   $(this).siblings(".delete_operation").show();
 
@@ -39,6 +47,8 @@ var textarea = $("textarea")
   //     comment_submit.removeClass("disabled");
   //   }
   // })
+
+// 评论
 comment_submit.on("click", function() {
   var value = textarea.val();
   textarea.removeClass("empty")
@@ -62,6 +72,7 @@ comment_submit.on("click", function() {
   common.ajax_func.call(null, obj);
 })
 
+// 退出
 $(".logout").on("click", function() {
   var obj = {
     url: "/logout",
@@ -76,7 +87,7 @@ $(".logout").on("click", function() {
   common.ajax_func.call(null, obj);
 });
 
-
+// test
 $(".test_jade").on("click", function() {
   var obj = {
     url: location.pathname + "/slice",
@@ -93,6 +104,7 @@ $(".test_jade").on("click", function() {
   common.ajax_func.call(null, obj);
 })
 
+// 分页
 $(document).ready(function() {
   var paginate = $(".paginate_wrapper .pagination");
   var totalCountsText = $(".totalPage").text()

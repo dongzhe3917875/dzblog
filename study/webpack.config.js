@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 // var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var path = require("path");
-
+var Ex = require("extract-text-webpack-plugin");
 // var hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
 // 关于
 // webpack-dev-middleware/middleware.js:106
@@ -38,7 +38,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.css$/,
-      loader: 'style-loader!css-loader'
+      loader: Ex.extract('style-loader', 'css-loader')
     }, {
       test: /\.js$/,
       loader: 'babel-loader',
@@ -48,6 +48,9 @@ module.exports = {
       loader: 'vue'
     }]
   },
+  plugins: [
+    new Ex('[name].css')
+  ],
   // plugins: [
   //     new webpack.optimize.OccurenceOrderPlugin(),
   //     new webpack.HotModuleReplacementPlugin(),
@@ -58,6 +61,6 @@ module.exports = {
     // path.resolve解析出一个绝对路径，特别适合resolve的root
     // cd public/components
     // pwd  -> /usr/local/dzblog/dzblog/study/public/components
-    root: [path.resolve("public/javascripts"),path.resolve("public/components")]
+    root: [path.resolve("public/javascripts"),path.resolve("public/components"),path.resolve("public/stylesheets")]
   }
 }
