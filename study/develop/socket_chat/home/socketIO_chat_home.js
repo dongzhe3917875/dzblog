@@ -31,7 +31,7 @@ $(".context").on("click", ".delete_confirm", function(event) {
 })
 
 // 删除显示
-$(".delete").on("click", function() {
+$(".context").on("click", ".delete", function() {
   $(this).siblings(".delete_operation").show();
 
 })
@@ -108,12 +108,13 @@ $(".test_jade").on("click", function() {
 $(document).ready(function() {
   var paginate = $(".paginate_wrapper .pagination");
   var totalCountsText = $(".totalPage").text()
-  var totalCounts = totalCountsText && parseInt(/\d+/.exec(totalCountsText)[0]);
+  var totalCounts = totalCountsText && parseInt(/\d+/.exec(totalCountsText)[
+    0]);
   var currentPage = 1;
   var offset = 0;
   var pageSize = 5;
   var xhr = null;
-  paginate.length &&　$.jqPaginator(paginate, {
+  paginate.length && 　$.jqPaginator(paginate, {
     totalCounts: totalCounts,
     visiblePages: 3,
     pageSize: pageSize,
@@ -123,7 +124,7 @@ $(document).ready(function() {
       // 这样就能避免异步带来的问题
       xhr && xhr.abort();
       console.log(num, type);
-      offset =  pageSize * (num - 1);
+      offset = pageSize * (num - 1);
       var obj = {
         url: location.pathname + "/slice",
         data: {

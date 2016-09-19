@@ -89,14 +89,31 @@
     padding-left: 25px;
     padding-right: 25px;
     overflow: hidden;
+    .article_item {
+      @keyframes mymove {
+        from {opacity:0.3;}
+        to {opacity:1;}
+      }
+      transition:opacity 2s;
+      &:hover {
+        background-color: #e3f1f8;
+        cursor: pointer;
+        animation: mymove 1.2s;
+      }
+      border-bottom: 1px solid #e5e5e5;
+      h4 {
+        padding: 15px 0;
+      }
+      a:hover {
+        color: #07f;
+      }
+      padding-bottom: 10px;
+    }
     .info {
       font-size: 12px;
     }
     .article {
       margin-bottom: 5px;
-    }
-    .line {
-      border: 1px solid #ccc;
     }
     .seeAll{
       font-size: 12px;
