@@ -16,7 +16,7 @@ div.body
       div.context
         div.article_wrapper
           each item, i in posts
-            p 
+            div.article_item(data-url="/blog/#{item.name}/#{item.time.day}/#{item.title}") 
               h4 
                 a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
               p.info 

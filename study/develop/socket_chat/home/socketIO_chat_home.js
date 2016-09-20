@@ -131,6 +131,9 @@ $(document).ready(function() {
           offset: offset,
           pageSize: pageSize
         },
+        beforeSend: function() {
+          console.log("aaaa")
+        },
         // dataType: "html",
         success: function(data) {
           $(".article_wrapper").html(data.content);

@@ -1,0 +1,13 @@
+each item, i in posts
+  div.article_item(data-url="/blog/#{item.name}/#{item.time.day}/#{item.title}") 
+    h4 
+      a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+    p.info 
+      作者：
+      a(href="/blog/#{item.name}") #{item.name}；
+      日期：
+      #{item.time.minute}
+    div
+      //- p.article !{item.post.slice(0, 250)}  
+      p.article #{item.subject} ...
+        a.seeAll(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") 查看全文
