@@ -1,6 +1,7 @@
 var common = require("./common.js");
 require("./jquery.paginator.js");
 var Paginator = require("./table_paginator.js")
+
 require("common.css");
 require("paginator.css");
 require("socketIO_chat_home.css");
@@ -148,3 +149,46 @@ $(document).ready(function() {
     }
   });
 })
+
+
+$(document).ready(function() {
+    var sidebar = document.querySelector(".sidebar");
+    var context = document.createElement("div");
+    context.id = "contextmenu";
+    context.className = "hidden";
+    var headerHeight = document.querySelector(".header").offsetHeight;
+    context.innerHTML = dzhappy.templates.blog_menu({});
+    sidebar.appendChild(context);
+
+    function closeContextMenu() {
+      return false;
+    }
+
+    function closeNewContextMenu(event) {
+      context.className = "hidden";
+    }
+
+    function openNewContextMenu(event) {
+      event = event || window.event;
+      var btn = event.button;
+      console.log(btn);
+      // 判断是否是鼠标右键
+      if (btn == 2) {
+        console.log(event.clientX, event.clientY)
+        context.style.left = event.clientX + "px";
+        context.style.top = event.clientY - headerHeight + "px";
+        context.className = "show";
+      }
+    }
+
+    $(sidebar).on("contextmenu", closeContextMenu);
+    $(document).on("mousedown", closeNewContextMenu);
+    $(sidebar).on("mouseup", "li", openNewContextMenu);
+
+  })
+  // 添加contextmenu
+
+
+// (function() {
+//
+// })()
