@@ -181,6 +181,18 @@ $(document).ready(function() {
       }
     }
 
+    function getContextMenuPosition(event) {
+      var x = event.clientX;
+      var y = event.clientY - headerHeight;
+      var vx = document.documentElement.clientWidth;
+      var vy = document.documentElement.clientHeight;
+      var wm = menu.offsetWidth;
+      var wh = menu.offsetHeight;
+      return {
+        left: x + wm > vx ? (vx - wm) : x,
+        top: y + wh > vy ? (vy - wh) : y
+      }
+    }
     $(sidebar).on("contextmenu", closeContextMenu);
     $(document).on("mousedown", closeNewContextMenu);
     $(sidebar).on("mouseup", "li", openNewContextMenu);
