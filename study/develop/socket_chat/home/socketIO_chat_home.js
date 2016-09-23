@@ -152,6 +152,7 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
+  if (Handlebars && dzhappy) {
     var sidebar = document.querySelector(".sidebar");
     var context = document.createElement("div");
     context.id = "contextmenu";
@@ -196,11 +197,5 @@ $(document).ready(function() {
     $(sidebar).on("contextmenu", closeContextMenu);
     $(document).on("mousedown", closeNewContextMenu);
     $(sidebar).on("mouseup", "li", openNewContextMenu);
-
-  })
-  // 添加contextmenu
-
-
-// (function() {
-//
-// })()
+  }
+})

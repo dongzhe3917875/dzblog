@@ -19,6 +19,7 @@ var birds = require('./routes/bird');
 var mongo = require('mongodb');
 var monk = require('monk');
 var routes = require('./routes/index');
+var project = require('./routes/project');
 var cookieParser = require('cookie-parser');
 var flash = require("connect-flash");
 var settings = require("./setting");
@@ -138,6 +139,7 @@ app.use('/', datatable);
 app.use('/blog', blog);
 app.use('/', vue_router);
 app.use('/', operate_svg);
+app.use('/project', project);
 app.route('/book')
   .get(function(req, res) {
     // 可以使用sendfile来传输文件

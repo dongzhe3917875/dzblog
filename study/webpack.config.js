@@ -7,31 +7,35 @@ var Ex = require("extract-text-webpack-plugin");
 // webpack-dev-middleware/middleware.js:106
 //             if(err) throw err;
 //                     ^
-    // Error: invalid argument
-    // For what it's worth, I also ran into this problem today, and found a workaround for my scenario. I was using:
-    //
-    // output: {
-    //     path: './dist',
-    //     filename: 'bundle.js'
-    // },
-    // but I changed it to use:
-    //
-    // output: {
-    //     path: __dirname + '/dist',
-    //     filename: 'bundle.js'
-    // },
-    // and everything worked fine afterwards.
-    // https://github.com/webpack/webpack-dev-middleware/issues/97
+// Error: invalid argument
+// For what it's worth, I also ran into this problem today, and found a workaround for my scenario. I was using:
+//
+// output: {
+//     path: './dist',
+//     filename: 'bundle.js'
+// },
+// but I changed it to use:
+//
+// output: {
+//     path: __dirname + '/dist',
+//     filename: 'bundle.js'
+// },
+// and everything worked fine afterwards.
+// https://github.com/webpack/webpack-dev-middleware/issues/97
+function joinjsPath(filename) {
+  return path.join(__dirname, 'public/javascripts/' + filename + ".js");
+}
 module.exports = {
   // plugins: [commonsPlugin],
   entry: {
-    "blog_home": [path.join(__dirname, 'public/javascripts/socketIO_chat_home.js')],
-    "datatable":  [path.join(__dirname, 'public/javascripts/datatable.js')],
-    "blog_post": [path.join(__dirname, 'public/javascripts/postBlog.js')],
-    "vue_loader_demo": [path.join(__dirname, 'public/javascripts/vue_loader_demo.js')]
+    "blog_home": [joinjsPath("socketIO_chat_home")],
+    "datatable": [joinjsPath("datatable")],
+    "blog_post": [joinjsPath("postBlog")],
+    "vue_loader_demo": [joinjsPath("vue_loader_demo")],
+    "select_simulate": [joinjsPath("select_simulate")]
   },
   output: {
-    path:  path.join(__dirname, 'public/dist'),
+    path: path.join(__dirname, 'public/dist'),
     filename: '[name].js',
     publicPath: '/'
   },
@@ -43,6 +47,10 @@ module.exports = {
       test: /\.js$/,
       loader: 'babel-loader',
       exclude: "/node_modules/"
+    }, {
+      test: /\.less$/,
+      // loader: 'style-loader!css-loader!less-loader'
+      loader: Ex.extract("style-loader", "css-loader!less-loader")
     }, {
       test: /\.vue$/,
       loader: 'vue'
@@ -61,6 +69,7 @@ module.exports = {
     // path.resolve解析出一个绝对路径，特别适合resolve的root
     // cd public/components
     // pwd  -> /usr/local/dzblog/dzblog/study/public/components
-    root: [path.resolve("public/javascripts"),path.resolve("public/components"),path.resolve("public/stylesheets")]
+    root: [path.resolve("public/javascripts"), path.resolve(
+      "public/components"), path.resolve("public/stylesheets")]
   }
 }
