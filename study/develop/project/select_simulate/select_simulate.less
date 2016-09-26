@@ -12,9 +12,16 @@
         padding: 0;
         width: 100px;
         margin: 0;
+        transition: height 0.4s;
+        overflow: hidden;
+        &.hide_select{
+          height: 0;
+          border-top: 0;
+          border-bottom: 0;
+        }
         li {
           list-style-type: none;
-          overflow: visible;
+          overflow: hidden;
         }
     }
     .show_select {
