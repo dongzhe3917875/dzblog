@@ -1,6 +1,7 @@
 var common = require("./common.js");
 require("./jquery.paginator.js");
 var Paginator = require("./table_paginator.js")
+
 require("common.css");
 require("paginator.css");
 require("socketIO_chat_home.css");
@@ -31,7 +32,7 @@ $(".context").on("click", ".delete_confirm", function(event) {
 })
 
 // 删除显示
-$(".delete").on("click", function() {
+$(".context").on("click", ".delete", function() {
   $(this).siblings(".delete_operation").show();
 
 })
@@ -108,12 +109,13 @@ $(".test_jade").on("click", function() {
 $(document).ready(function() {
   var paginate = $(".paginate_wrapper .pagination");
   var totalCountsText = $(".totalPage").text()
-  var totalCounts = totalCountsText && parseInt(/\d+/.exec(totalCountsText)[0]);
+  var totalCounts = totalCountsText && parseInt(/\d+/.exec(totalCountsText)[
+    0]);
   var currentPage = 1;
   var offset = 0;
   var pageSize = 5;
   var xhr = null;
-  paginate.length &&　$.jqPaginator(paginate, {
+  paginate.length && 　$.jqPaginator(paginate, {
     totalCounts: totalCounts,
     visiblePages: 3,
     pageSize: pageSize,
@@ -123,12 +125,15 @@ $(document).ready(function() {
       // 这样就能避免异步带来的问题
       xhr && xhr.abort();
       console.log(num, type);
-      offset =  pageSize * (num - 1);
+      offset = pageSize * (num - 1);
       var obj = {
         url: location.pathname + "/slice",
         data: {
           offset: offset,
           pageSize: pageSize
+        },
+        beforeSend: function() {
+          console.log("aaaa")
         },
         // dataType: "html",
         success: function(data) {
@@ -143,4 +148,54 @@ $(document).ready(function() {
       xhr = common.ajax_func.call(null, obj);
     }
   });
+})
+
+
+$(document).ready(function() {
+  if (Handlebars && dzhappy) {
+    var sidebar = document.querySelector(".sidebar");
+    var context = document.createElement("div");
+    context.id = "contextmenu";
+    context.className = "hidden";
+    var headerHeight = document.querySelector(".header").offsetHeight;
+    context.innerHTML = dzhappy.templates.blog_menu({});
+    sidebar.appendChild(context);
+
+    function closeContextMenu() {
+      return false;
+    }
+
+    function closeNewContextMenu(event) {
+      context.className = "hidden";
+    }
+
+    function openNewContextMenu(event) {
+      event = event || window.event;
+      var btn = event.button;
+      console.log(btn);
+      // 判断是否是鼠标右键
+      if (btn == 2) {
+        console.log(event.clientX, event.clientY)
+        context.style.left = event.clientX + "px";
+        context.style.top = event.clientY - headerHeight + "px";
+        context.className = "show";
+      }
+    }
+
+    function getContextMenuPosition(event) {
+      var x = event.clientX;
+      var y = event.clientY - headerHeight;
+      var vx = document.documentElement.clientWidth;
+      var vy = document.documentElement.clientHeight;
+      var wm = menu.offsetWidth;
+      var wh = menu.offsetHeight;
+      return {
+        left: x + wm > vx ? (vx - wm) : x,
+        top: y + wh > vy ? (vy - wh) : y
+      }
+    }
+    $(sidebar).on("contextmenu", closeContextMenu);
+    $(document).on("mousedown", closeNewContextMenu);
+    $(sidebar).on("mouseup", "li", openNewContextMenu);
+  }
 })

@@ -100,7 +100,7 @@ exports.list_slice = function(req, res) {
         return res.redirect('/blog/home');
       }
       require('express')().set('view engine', 'jade').render(
-        'blog_list_paginator', {
+        'blog_list_index_paginator', {
           user: req.session.user,
           posts: posts
         },
