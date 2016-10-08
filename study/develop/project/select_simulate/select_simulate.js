@@ -22,8 +22,12 @@ button.addEventListener("click", function(event) {
 
 
 // proto select demo
-var domSelect = document.querySelector(".protoSelect");
+var domSelect = document.querySelectorAll(".protoSelect");
 var select_map1 = new WeakMap();
-proto_select_simulate.call(domSelect, {
-  select_map: select_map1
-})
+Array.prototype.slice.call(domSelect).forEach((ele) => proto_select_simulate.call(
+  ele, {
+    select_map: select_map1
+  }));
+// proto_select_simulate.call(domSelect, {
+//   select_map: select_map1
+// })
