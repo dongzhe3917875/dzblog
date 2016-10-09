@@ -1,5 +1,4 @@
 var changeClass = require('./protoChangeClass').default;
-
 var proto_select_simulate = (() => {
   var select_map;
   var select_all_nodes = [];
@@ -69,11 +68,9 @@ var proto_select_simulate = (() => {
     select_map = options.select_map || new WeakMap();
     var show_select = this.querySelectorAll(".show_select");
     select_all_nodes.push(this.querySelector(".select_all"));
-    // var select_all_nodes = this.querySelectorAll(".select_all");
     var select_item = "select_item"
     var imitate_select = this;
     var select_all_array = oManager.getDomArray(select_all_nodes);
-    // console.log(select_all_array)
     var show_select_array = oManager.getDomArray(show_select);
     show_select_array.forEach((ele) => {
       ele.addEventListener("click", function(event) {
@@ -100,7 +97,6 @@ var proto_select_simulate = (() => {
         })
       })
     })
-
     if (!documentEvent) {
       document.addEventListener("click", function(event) {
         var select_all_array = oManager.getDomArray(select_all_nodes);
@@ -108,10 +104,7 @@ var proto_select_simulate = (() => {
       })
       documentEvent = true;
     }
-
-
     this.addEventListener("click", function(event) {
-
       if (event.target.classList.contains(select_item)) {
         event.stopPropagation();
         var select_value = event.target.textContent;
