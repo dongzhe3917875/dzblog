@@ -104,7 +104,7 @@ $.fn.select = function(options) {
       documentEvent = true;
     }
 
-    $(document).on("click", select_item, function(event) {
+    $this.on("click", select_item, function(event) {
       event.stopPropagation();
       var select_value = $(event.target).text();
       var show_item = $(this).parents(".imitate_select").find(

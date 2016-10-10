@@ -46,7 +46,16 @@ module.exports = {
     }, {
       test: /\.js$/,
       loader: 'babel-loader',
-      exclude: "/node_modules/"
+      exclude: function(path) {
+          // 路径中含有 node_modules 的就不去解析。
+          var isNpmModule = !!path.match(/node_modules/);
+          return isNpmModule;
+        }
+        // include: [
+        //   // 只去解析运行目录下的 src 和 demo 文件夹
+        //   path.join(process.cwd(), './src'),
+        //   path.join(process.cwd(), './demo')
+        // ]
     }, {
       test: /\.less$/,
       // loader: 'style-loader!css-loader!less-loader'
@@ -57,7 +66,13 @@ module.exports = {
     }]
   },
   plugins: [
-    new Ex('[name].css')
+    new Ex('[name].css'),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require("./manifest.json")
+    })
+    // 可以实现提取出来的公共打包
+    // new  webpack.optimize.CommonsChunkPlugin('common.js', ['blog_home', 'datatable'])
   ],
   // plugins: [
   //     new webpack.optimize.OccurenceOrderPlugin(),

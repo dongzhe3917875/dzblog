@@ -1,3 +1,5 @@
+var Vue = require('vue')
+var selectMuti = require('select.vue')
 require("select_simulate.css");
 var changeClass = require('./protoChangeClass').default;
 require("./jquery.select.js");
@@ -31,3 +33,21 @@ Array.prototype.slice.call(domSelect).forEach((ele) => proto_select_simulate.cal
 // proto_select_simulate.call(domSelect, {
 //   select_map: select_map1
 // })
+
+// vue select demo
+var select_vue = [{
+  context: ["河北省", "北京市", "天津市"],
+  status: false
+}, {
+  context: ["美国", "加拿大", "墨西哥"],
+  status: false
+}]
+new Vue({
+  el: "body",
+  data: {
+    select_vue
+  },
+  components: {
+    selectMuti
+  }
+})

@@ -1,5 +1,6 @@
 link(rel='stylesheet', href="/dist/select_simulate.css", type="text/css")
-div
+div.jqjqselectWrapper
+  h3 jqSelectDemo
   div.imitate_select.name-select.jqselect
     div.show_select
       span.show_item 目录
@@ -39,5 +40,9 @@ div.selectDemoWrapper
       li.select_item 20-30
       li.select_item 30-40
       li.select_item 40-50
+div.selectDemoWrapper
+  h3 vue selectDemo
+  select-muti(v-bind:selectdata="select_vue")
 script(src="/bower_components/jquery/dist/jquery.min.js")
+script(src="/dist/lib.js")
 script(src="/dist/select_simulate.js")   
