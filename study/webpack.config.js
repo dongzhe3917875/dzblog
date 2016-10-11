@@ -47,15 +47,18 @@ module.exports = {
       test: /\.js$/,
       loader: 'babel-loader',
       exclude: function(path) {
-          // 路径中含有 node_modules 的就不去解析。
-          var isNpmModule = !!path.match(/node_modules/);
-          return isNpmModule;
-        }
-        // include: [
-        //   // 只去解析运行目录下的 src 和 demo 文件夹
-        //   path.join(process.cwd(), './src'),
-        //   path.join(process.cwd(), './demo')
-        // ]
+        // 路径中含有 node_modules 的就不去解析。
+        var isNpmModule = !!path.match(/node_modules/);
+        return isNpmModule;
+      },
+      query: {
+        presets: ['es2015']
+      }
+      // include: [
+      //   // 只去解析运行目录下的 src 和 demo 文件夹
+      //   path.join(process.cwd(), './src'),
+      //   path.join(process.cwd(), './demo')
+      // ]
     }, {
       test: /\.less$/,
       // loader: 'style-loader!css-loader!less-loader'

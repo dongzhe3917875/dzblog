@@ -35,18 +35,8 @@ Array.prototype.slice.call(domSelect).forEach((ele) => proto_select_simulate.cal
 // })
 
 // vue select demo
-var select_vue = [{
-  context: ["河北省", "北京市", "天津市"],
-  status: false
-}, {
-  context: ["美国", "加拿大", "墨西哥"],
-  status: false
-}]
 new Vue({
   el: "body",
-  data: {
-    select_vue
-  },
   components: {
     selectMuti
   }
