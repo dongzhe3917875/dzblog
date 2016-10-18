@@ -3,8 +3,12 @@ link(rel='stylesheet', href="/bower_components/font-awesome/css/font-awesome.css
 link(rel='stylesheet', href="/dist/blog_home.css", type="text/css")
 div.body
   include head
+  include modal
   div.content
     //- a.btn.btn-warning.post(href="/blog/post", target="_blank") 创建一篇文章
+    if user
+      if user.name == "admin"
+        a.btn.btn-warning.create_new_version(data-toggle="modal",data-target="#Modal",data-backdrop="static") +创建一个新版本
     div.context_wrapper
       div.sidebar
         ul
@@ -32,6 +36,9 @@ div.body
           div.totalPage 共#{total}条
           div.paginate.pagination
 script(src="/bower_components/jquery/dist/jquery.min.js")
+script(src="/bower_components/bootstrap/dist/js/bootstrap.min.js")
+script(src="/bower_components/handlebars/handlebars.min.js")
+script(src="/javascripts/templates.js")
 //- script(src="/bower_components/handlebars/handlebars.min.js")
 //- script(src="/javascripts/templates.js")
 //- script(src="/javascripts/jquery_validate.js")

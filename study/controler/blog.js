@@ -52,6 +52,7 @@ exports.list = function(req, res) {
       // console.log(posts)
       res.render("blog_list", {
         user: req.session.user,
+        ifcurrent: req.session.user.name == req.params.name,
         posts: posts,
         total: total
       });

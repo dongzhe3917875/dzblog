@@ -1,10 +1,14 @@
 var common = require("./common.js");
 require("./jquery.paginator.js");
 var Paginator = require("./table_paginator.js")
+require("./jquery.initModal.js")
 
 require("common.css");
+require("modal.css");
 require("paginator.css");
 require("socketIO_chat_home.css");
+
+
 // 删除取消
 $(".context").on("click", ".delete_cancel", function(event) {
   $(event.target).parent().hide();
@@ -115,7 +119,7 @@ $(document).ready(function() {
   var offset = 0;
   var pageSize = 5;
   var xhr = null;
-  paginate.length && 　$.jqPaginator(paginate, {
+  paginate.length && totalCounts != 0 && $.jqPaginator(paginate, {
     totalCounts: totalCounts,
     visiblePages: 3,
     pageSize: pageSize,
@@ -152,7 +156,7 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-  if (Handlebars && dzhappy) {
+  if (Handlebars !== undefined && dzhappy) {
     var sidebar = document.querySelector(".sidebar");
     var context = document.createElement("div");
     context.id = "contextmenu";
@@ -198,4 +202,40 @@ $(document).ready(function() {
     $(document).on("mousedown", closeNewContextMenu);
     $(sidebar).on("mouseup", "li", openNewContextMenu);
   }
+})
+
+
+
+$(document).ready(function() {
+  var admin = {
+    modal: $("#Modal")
+  };
+  admin.create_version = (function(_this) {
+    return {
+      init: function() {
+        this.clickBtn = ".create_new_version"
+      },
+      bind: function() {
+        $(document).on("click", this.clickBtn, function() {
+          _this.modal.initModal({
+            title: "添加版本号",
+            content: {
+              ajax: false,
+              content_template: dzhappy.templates.create_new_version,
+              content_data: {}
+            },
+            footer: {
+              make_confirm: "确定",
+              initDisabled: false
+            }
+          });
+        })
+      },
+      startUp: function() {
+        this.init();
+        this.bind();
+      }
+    }
+  })(admin)
+  admin.create_version.startUp();
 })

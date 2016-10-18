@@ -26,7 +26,8 @@ $(document).ready(function() {
   });
   $("#context").on("keyup", function() {
     var text = $(this).val();
-    html = converter.makeHtml(text);
+    var html = converter.makeHtml(text);
+    console.log(html);
     $(".showhtml").html(html);
   })
 

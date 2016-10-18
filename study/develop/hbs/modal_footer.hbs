@@ -1,0 +1,22 @@
+{{#if slidingMode}}
+    {{#slidingcompare slidingPage}}
+    {{!-- <button type="button" class="btn btn-success modal_previous_step"><上一步</button>
+    <button type="button" class="btn btn-success modal_next_step">下一步></button>
+    <button type="button" class="btn btn-warning make_confirm">{{ make_confirm }}</button> --}}
+    {{/slidingcompare}}
+{{else}}
+    {{#if haveCancel}}
+        <button type="button" class="btn btn-default make_close" data-dismiss="modal">取消</button>
+    {{else}}
+    {{/if}}
+
+    {{#if autoClose}}
+        <button type="button" class="btn btn-success make_confirm" data-dismiss="modal">{{ make_confirm }}</button>
+    {{else}}
+        {{#if initDisabled}}
+        <button type="button" class="btn btn-success make_confirm disabled">{{ make_confirm }}</button>
+        {{else}}
+        <button type="button" class="btn btn-success make_confirm">{{ make_confirm }}</button>
+        {{/if}}
+    {{/if}}
+{{/if}}

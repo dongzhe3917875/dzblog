@@ -5,10 +5,11 @@ link(rel='stylesheet', href="/dist/blog_home.css", type="text/css")
 div.body
   include head
   div.content
-    if user
-      each item, i in posts
-        if user.name == item.name && i == 0
-          a.btn.btn-warning.post(href="/blog/post", target="_blank") 创建一篇文章
+    if ifcurrent
+      a.btn.btn-warning.post(href="/blog/post", target="_blank") 创建一篇文章
+      //- each item, i in posts
+      //-   if user.name == item.name && i == 0
+      //-     a.btn.btn-warning.post(href="/blog/post", target="_blank") 创建一篇文章
     div.context_wrapper
       div.sidebar
         ul

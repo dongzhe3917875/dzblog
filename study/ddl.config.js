@@ -1,6 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
-var vendors = ['vue', 'vuex'];
+var vendors = ['vue', 'vuex', 'vue-router'];
 
 module.exports = {
   entry: {
