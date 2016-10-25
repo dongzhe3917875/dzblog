@@ -1,13 +1,14 @@
 var mongodb = require("./db.js");
 var markdown = require("markdown").markdown;
-var Version = require("./version.js").markdown;
+var Version = require("./version.js");
 
-function Post(name, title, markdown, subject, post) {
+function Post(name, title, markdown, subject, post, version) {
   this.name = name;
   this.title = title;
   this.post = post;
   this.subject = subject;
   this.markdown = markdown;
+  this.version = version;
 }
 
 module.exports = Post;
@@ -27,6 +28,7 @@ Post.prototype.save = function(callback) {
   var post = {
     name: this.name,
     time: time,
+    version: this.version,
     title: this.title,
     subject: this.subject,
     post: this.post,
@@ -51,8 +53,9 @@ Post.prototype.save = function(callback) {
         if (err) {
           return callback(err);
         }
-        callback(null);
         mongodb.close();
+        callback(null);
+
       });
     });
   });

@@ -30,6 +30,7 @@ exports.home = function(req, res) {
         return res.redirect('/blog/home');
       }
       res.render("socketIO_chat_home", {
+        index: true,
         user: req.session.user,
         posts: posts,
         total: total,

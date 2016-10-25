@@ -39,7 +39,8 @@ $(document).ready(function() {
         title: $("#title").val(),
         markdown: $("#context").val(),
         post: $(".showhtml").html(),
-        subject: $("#subject").val()
+        subject: $("#subject").val(),
+        version: $("#version").val()
       },
       success: function(data) {
         if (data.error) {

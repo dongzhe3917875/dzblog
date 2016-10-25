@@ -3,7 +3,15 @@ var Comment = require('../models/comments.js');
 var User = require('../models/user.js');
 var Version = require('../models/version.js');
 exports.post = function(req, res) {
-  res.render("postBlog", {})
+  Version.get_all(function(err1, docs) {
+    if (err1) {
+      return res.redirect('/blog/home');
+    }
+    res.render("postBlog", {
+      versions: docs
+    })
+  })
+
 }
 
 exports.post_blog = function(req, res) {
@@ -11,17 +19,31 @@ exports.post_blog = function(req, res) {
   var currentUser = req.session.user;
   var post = new Post(currentUser.name, req.body.title, req.body.markdown,
     req.body.subject, req
-    .body.post);
-  console.log(post);
+    .body.post, req.body.version);
   post.save(function(err) {
     if (err) {
       return res.send({
         error: err
       })
     }
-    return res.send({
-      success: "发表成功！",
-      location: "/blog/" + currentUser.name
+    Version.get_one(req.body.version, function(err, version) {
+      if (err) {
+        return res.send({
+          error: err
+        })
+      }
+      var count = version.article;
+      Version.update(req.body.version, count, function(err) {
+        if (err) {
+          return res.send({
+            error: err
+          })
+        }
+        return res.send({
+          success: "发表成功！",
+          location: "/blog/" + currentUser.name
+        })
+      })
     })
   })
 }
@@ -50,13 +72,38 @@ exports.list = function(req, res) {
       if (err) {
         return res.redirect('/blog/home');
       }
-      // console.log(posts)
-      res.render("blog_list", {
-        user: req.session.user,
-        ifcurrent: req.session.user.name == req.params.name,
-        posts: posts,
-        total: total
-      });
+      Version.get_all(function(err1, docs) {
+        if (err1) {
+          return res.redirect('/blog/home');
+        }
+        Post.getAll(user.name, function(err, articles) {
+          if (err) {
+            return res.redirect('/blog/home');
+          }
+          var version_to_article = {};
+          docs.forEach((doc) => {
+            var version = doc.version;
+            version_to_article[version] = 0;
+            articles.forEach((article) => {
+              if (article.version == version) {
+                version_to_article[version] =
+                  version_to_article[version] + 1
+              }
+            })
+          })
+          res.render("blog_list", {
+            user: req.session.user,
+            ifcurrent: req.session.user.name ==
+              req.params.name,
+            posts: posts,
+            total: total,
+            versions: docs,
+            version_to_article: version_to_article
+          });
+        })
+
+      })
+
     })
   })
 }
@@ -76,7 +123,8 @@ exports.list_slice = function(req, res) {
         if (err) {
           return res.redirect('/blog/home');
         }
-        require('express')().set('view engine', 'jade').render(
+        require('express')().set('view engine',
+          'jade').render(
           'blog_list_paginator', {
             user: req.session.user,
             posts: posts
@@ -122,7 +170,8 @@ exports.list_slice = function(req, res) {
 }
 
 exports.listone = function(req, res) {
-  Post.getOne(req.params.name, req.params.day, req.params.title, function(err,
+  Post.getOne(req.params.name, req.params.day, req.params.title, function(
+    err,
     post) {
     if (err) {
       return res.send({
@@ -138,7 +187,8 @@ exports.listone = function(req, res) {
 }
 
 exports.edit = function(req, res) {
-  Post.getOne(req.params.name, req.params.day, req.params.title, function(err,
+  Post.getOne(req.params.name, req.params.day, req.params.title, function(
+    err,
     post) {
     if (err) {
       return res.send({
@@ -163,7 +213,8 @@ exports.update_post = function(req, res) {
   Post.update(currentUser.name, req.params.day, req.params.title,
     post,
     function(err) {
-      var url = encodeURI("/blog/" + req.params.name + "/" + req.params.day +
+      var url = encodeURI("/blog/" + req.params.name + "/" + req.params
+        .day +
         "/" + req.params.title);
 
       if (err) {
@@ -180,17 +231,18 @@ exports.update_post = function(req, res) {
 
 exports.remove_post = function(req, res) {
   var currentUser = req.session.user;
-  Post.remove(currentUser.name, req.params.day, req.params.title, function(
-    err) {
-    if (err) {
+  Post.remove(currentUser.name, req.params.day, req.params.title,
+    function(
+      err) {
+      if (err) {
+        return res.send({
+          error: err
+        })
+      }
       return res.send({
-        error: err
+        success: "删除成功"
       })
-    }
-    return res.send({
-      success: "删除成功"
     })
-  })
 }
 exports.comment_post = function(req, res) {
   var currentUser = req.session.user;
@@ -205,7 +257,8 @@ exports.comment_post = function(req, res) {
     content: req.body.comment
   }
 
-  var newComment = new Comment(req.params.name, req.params.day, req.params.title,
+  var newComment = new Comment(req.params.name, req.params.day, req.params
+    .title,
     comment);
   newComment.save(function(err) {
     if (err) {

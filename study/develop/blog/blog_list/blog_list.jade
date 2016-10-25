@@ -2,6 +2,7 @@ link(rel='stylesheet', href="/bower_components/bootstrap/dist/css/bootstrap.css"
 link(rel='stylesheet', href="/bower_components/font-awesome/css/font-awesome.css", type="text/css")
 //- script(src="/javascripts/socketIO_chat_home.js")
 link(rel='stylesheet', href="/dist/blog_home.css", type="text/css")
+#index(style="display:none;") #{index}
 div.body
   include head
   div.content
@@ -13,9 +14,9 @@ div.body
     div.context_wrapper
       div.sidebar
         ul
-          each item, i in posts
+          each item, i in versions
             li
-              a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+              a(href="/blog/#{item.version}") #{item.version}版本 (#{version_to_article[item.version]}篇文档)
       div.sidebar_right
         p in 
       div.context

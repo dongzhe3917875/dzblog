@@ -61,3 +61,61 @@ Version.get_all = function(callback) {
     })
   })
 }
+
+Version.get_one = function(version, callback) {
+  var query = {
+    version: version
+  };
+  mongodb.open(function(err, db) {
+    if (err) {
+      return callback(err);
+    }
+    db.collection("version", function(err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      collection.findOne(query, function(err, version) {
+        mongodb.close();
+        if (err) {
+          return callback(err);
+        }
+        callback(null, version)
+      })
+    })
+  })
+}
+
+
+
+Version.update = function(version, count, callback) {
+  console.log("xxxxxxxxxxx")
+  console.log(version, count)
+  console.log(callback)
+  mongodb.open(function(err, db) {
+    if (err) {
+      return callback(err)
+    }
+    db.collection("version", function(err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      collection.update({
+        version: version
+      }, {
+        $set: {
+          article: count + 1
+        }
+      }, function(err) {
+        mongodb.close();
+        if (err) {
+          return callback(err);
+        }
+        console.log("xxxxxxxxxxx")
+        console.log(callback)
+        callback(null);
+      })
+    });
+  });
+}

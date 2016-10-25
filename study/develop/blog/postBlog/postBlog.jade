@@ -5,6 +5,12 @@ div.postContext
   include uploadForm
   form.form-horizontal
     div.form-group
+      lable.control-label.col-sm-1(for="version") 版本：
+      div.col-sm-3
+        select.form-control#version
+          each item, i in versions
+              option(value="#{item.version}") #{item.version}
+    div.form-group
       lable.control-label.col-sm-1(for="title") 标题：
       div.col-sm-3
         input(placeholder="请填入标题").form-control#title

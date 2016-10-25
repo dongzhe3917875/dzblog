@@ -156,7 +156,7 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-  if (Handlebars !== undefined && dzhappy) {
+  if (Handlebars !== undefined && dzhappy && !($("#index").text() == "true")) {
     var sidebar = document.querySelector(".sidebar");
     var context = document.createElement("div");
     context.id = "contextmenu";
