@@ -208,7 +208,22 @@ $(document).ready(function() {
 
 $(document).ready(function() {
   var admin = {
-    modal: $("#Modal")
+    modal: $("#Modal"),
+    showTipSuccess: function(message) {
+      this.modal.find(".modal-body-tip").html(dzhappy.templates.modal_tip({
+        tip_type: "alert-success",
+        tip_content: message
+      }));
+      setTimeout(function() {
+        this.modal.modal('hide');
+      }.bind(this), 1000)
+    },
+    showTipError: function(message) {
+      this.modal.find(".modal-body-tip").html(dzhappy.templates.modal_tip({
+        tip_type: "alert-danger",
+        tip_content: message
+      }));
+    }
   };
   admin.create_version = (function(_this) {
     return {
@@ -229,7 +244,32 @@ $(document).ready(function() {
               initDisabled: false
             }
           });
-        })
+          // _this.modal.on("click", ".make_confirm", function() {
+          //   console.log("hahhaha")
+          // })
+          _this.modal.on("click", ".make_confirm", this.makeConfirmClick
+            .bind(this))
+        }.bind(this));
+      },
+      makeConfirmClick: function() {
+        var version = $("#version").val();
+        var obj = {
+          url: "/blog/create_new_version",
+          data: {
+            version,
+          },
+          success: function(data) {
+            console.log(data);
+            var message = data.error || data.success;
+            if (data.success) {
+              $(".context_wrapper .sidebar").html(dzhappy.templates
+                .render_version_list(data));
+              return _this.showTipSuccess(data.success);
+            }
+            return _this.showTipError(data.error);
+          }
+        }
+        common.ajax_func.call(null, obj);
       },
       startUp: function() {
         this.init();

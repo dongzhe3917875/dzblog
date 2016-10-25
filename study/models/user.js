@@ -26,7 +26,6 @@ User.prototype.save = function(callback) {
         mongodb.close();
         return callback(err);
       }
-      console.log("sssssssss");
       collection.insert(user, {
         safe: true
       }, function(err, user) {

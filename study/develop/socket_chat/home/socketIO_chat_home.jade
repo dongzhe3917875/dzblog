@@ -12,9 +12,9 @@ div.body
     div.context_wrapper
       div.sidebar
         ul
-          each item, i in posts
+          each item, i in versions
             li
-              a(href="/blog/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}(#{item.name})
+              a(href="/blog/#{item.version}") #{item.version}版本 (#{item.article}篇文档)
       div.sidebar_right
         p in 
       div.context

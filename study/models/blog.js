@@ -1,5 +1,6 @@
 var mongodb = require("./db.js");
 var markdown = require("markdown").markdown;
+var Version = require("./version.js").markdown;
 
 function Post(name, title, markdown, subject, post) {
   this.name = name;
@@ -31,7 +32,7 @@ Post.prototype.save = function(callback) {
     post: this.post,
     markdown: this.markdown,
     // 添加comments
-    comments:[]
+    comments: []
   }
 
   mongodb.open(function(err, db) {
@@ -75,26 +76,26 @@ Post.getAll = function(name, callback) {
       }
       // count可以统计出query的个数， 用于返回总个数
       collection.count(query, function(err, total) {
-        collection.find(query).sort({
-          time: -1
-        }).toArray(function(err, docs) {
-          mongodb.close();
-          if (err) {
-            return callback(err);
-          }
+          collection.find(query).sort({
+            time: -1
+          }).toArray(function(err, docs) {
+            mongodb.close();
+            if (err) {
+              return callback(err);
+            }
 
-          //支持markdown
-          // console.log(JSON.stringify(markdown))
-          // docs.forEach(function(ele) {
-          //   ele.post = markdown.toHTML(ele.post);
-          // })
-          callback(null, docs, total);
-          mongodb.close();
+            //支持markdown
+            // console.log(JSON.stringify(markdown))
+            // docs.forEach(function(ele) {
+            //   ele.post = markdown.toHTML(ele.post);
+            // })
+            callback(null, docs, total);
+            mongodb.close();
+          })
         })
-      })
-      // skip 跳过前多少个
-      // limit 请求的数量 这样就可以获取任何区间的数据了
-      // skip + limit用来返回数据
+        // skip 跳过前多少个
+        // limit 请求的数量 这样就可以获取任何区间的数据了
+        // skip + limit用来返回数据
     });
   });
 }
@@ -120,29 +121,30 @@ Post.getSlice = function(slice_obj, callback) {
       }
       // count可以统计出query的个数， 用于返回总个数
       collection.count(query, function(err, total) {
-        collection.find(query, {
-          skip: offset,
-          limit: pageSize
-        }).sort({
-          time: -1
-        }).toArray(function(err, docs) {
-          mongodb.close();
-          if (err) {
-            return callback(err);
-          }
+          collection.find(query, {
+            skip: offset,
+            limit: pageSize
+          }).sort({
+            time: -1
+          }).toArray(function(err, docs) {
+            mongodb.close();
+            if (err) {
+              return callback(err);
+            }
 
-          //支持markdown
-          // console.log(JSON.stringify(markdown))
-          // docs.forEach(function(ele) {
-          //   ele.post = markdown.toHTML(ele.post);
-          // })
-          callback(null, docs, total);
-          mongodb.close();
+            //支持markdown
+            // console.log(JSON.stringify(markdown))
+            // docs.forEach(function(ele) {
+            //   ele.post = markdown.toHTML(ele.post);
+            // })
+            mongodb.close();
+            callback(null, docs, total);
+
+          })
         })
-      })
-      // skip 跳过前多少个
-      // limit 请求的数量 这样就可以获取任何区间的数据了
-      // skip + limit用来返回数据
+        // skip 跳过前多少个
+        // limit 请求的数量 这样就可以获取任何区间的数据了
+        // skip + limit用来返回数据
     });
   });
 }

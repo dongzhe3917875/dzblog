@@ -1,4 +1,5 @@
 var Post = require("../models/blog.js");
+var Version = require("../models/version.js");
 exports.chat = function(req, res) {
   res.render("socket_chat", {});
 }
@@ -24,12 +25,21 @@ exports.home = function(req, res) {
       return res.redirect('/blog/home');
     }
     // console.log(posts)
-    res.render("socketIO_chat_home", {
-      user: req.session.user,
-      posts: posts,
-      total: total
-    });
+    Version.get_all(function(err1, docs) {
+      if (err1) {
+        return res.redirect('/blog/home');
+      }
+      res.render("socketIO_chat_home", {
+        user: req.session.user,
+        posts: posts,
+        total: total,
+        versions: docs
+      });
+    })
   })
+
+
+
   // Post.getAll(null, function(err, posts) {
   //   if (err) {
   //     posts = []

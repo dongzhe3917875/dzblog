@@ -1,6 +1,7 @@
 var Post = require('../models/blog.js');
 var Comment = require('../models/comments.js');
 var User = require('../models/user.js');
+var Version = require('../models/version.js');
 exports.post = function(req, res) {
   res.render("postBlog", {})
 }
@@ -215,6 +216,32 @@ exports.comment_post = function(req, res) {
     return res.send({
       success: "评论成功",
       value: comment.content
+    })
+  })
+}
+
+exports.create_new_version = function(req, res) {
+  var currentUser = req.session.user;
+  var version = req.body.version
+  var date = new Date();
+  var time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" +
+    date.getDate() + " " + date.getHours() + ":" + (date.getMinutes() <
+      10 ? '0' + date.getMinutes() : date.getMinutes());
+  var version_obj = new Version(version, currentUser.name, time);
+  version_obj.save(function(err) {
+    if (err) {
+      return res.send({
+        error: err
+      })
+    }
+    Version.get_all(function(err1, docs) {
+      if (err1) {
+        return res.redirect('/blog/home');
+      }
+      return res.send({
+        success: "创建成功",
+        versions: docs
+      })
     })
   })
 }
