@@ -32,7 +32,8 @@ module.exports = {
     "datatable": [joinjsPath("datatable")],
     "blog_post": [joinjsPath("postBlog")],
     "vue_loader_demo": [joinjsPath("vue_loader_demo")],
-    "select_simulate": [joinjsPath("select_simulate")]
+    "select_simulate": [joinjsPath("select_simulate")],
+    "vuex_cart": [joinjsPath("vuex_cart")]
   },
   output: {
     path: path.join(__dirname, 'public/dist'),
