@@ -105,7 +105,7 @@ Version.update = function(version, count, callback) {
         version: version
       }, {
         $set: {
-          article: count + 1
+          article: count
         }
       }, function(err) {
         mongodb.close();

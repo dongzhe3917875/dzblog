@@ -109,6 +109,7 @@ Post.getSlice = function(slice_obj, callback) {
   var name = slice_obj.name;
   var offset = slice_obj.offset;
   var pageSize = slice_obj.pageSize;
+  var version = slice_obj.version;
   mongodb.open(function(err, db) {
     if (err) {
       return callback(err)
@@ -121,6 +122,9 @@ Post.getSlice = function(slice_obj, callback) {
       var query = {};
       if (name) {
         query.name = name;
+      }
+      if (version) {
+        query.version = version;
       }
       // count可以统计出query的个数， 用于返回总个数
       collection.count(query, function(err, total) {
@@ -235,11 +239,12 @@ Post.remove = function(name, day, title, callback) {
       }, {
         w: 1
       }, function(err) {
+        mongodb.close();
         if (err) {
           return callback(err);
         }
         callback(null);
-        mongodb.close();
+
       })
     });
   });

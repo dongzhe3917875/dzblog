@@ -33,7 +33,7 @@ exports.post_blog = function(req, res) {
         })
       }
       var count = version.article;
-      Version.update(req.body.version, count, function(err) {
+      Version.update(req.body.version, count + 1, function(err) {
         if (err) {
           return res.send({
             error: err
@@ -91,6 +91,7 @@ exports.list = function(req, res) {
               }
             })
           })
+          console.log(version_to_article)
           res.render("blog_list", {
             user: req.session.user,
             ifcurrent: req.session.user.name ==
@@ -110,6 +111,7 @@ exports.list = function(req, res) {
 exports.list_slice = function(req, res) {
   var offset = req.body.offset;
   var pageSize = req.body.pageSize;
+  var version = req.body.version;
   if (req.session.user && (req.session.user.name == req.params.name)) {
     User.get(req.params.name, function(err, user) {
       if (!user) {
@@ -118,7 +120,8 @@ exports.list_slice = function(req, res) {
       Post.getSlice({
         name: user.name,
         offset: offset,
-        pageSize: pageSize
+        pageSize: pageSize,
+        version: version
       }, function(err, posts, total) {
         if (err) {
           return res.redirect('/blog/home');
@@ -144,7 +147,8 @@ exports.list_slice = function(req, res) {
   } else {
     Post.getSlice({
       offset: offset,
-      pageSize: pageSize
+      pageSize: pageSize,
+      version: version
     }, function(err, posts, total) {
       if (err) {
         return res.redirect('/blog/home');
@@ -231,6 +235,7 @@ exports.update_post = function(req, res) {
 
 exports.remove_post = function(req, res) {
   var currentUser = req.session.user;
+  var version = req.body.version;
   Post.remove(currentUser.name, req.params.day, req.params.title,
     function(
       err) {
@@ -239,9 +244,32 @@ exports.remove_post = function(req, res) {
           error: err
         })
       }
-      return res.send({
-        success: "删除成功"
-      })
+      if (version) {
+        Version.get_one(version, function(err, version) {
+          if (err) {
+            return res.send({
+              error: err
+            })
+          }
+          var count = version.article;
+          Version.update(req.body.version, count - 1, function(err) {
+            if (err) {
+              return res.send({
+                error: err
+              })
+            }
+            return res.send({
+              success: "删除成功",
+              version: req.body.version,
+              count: count - 1
+            })
+          })
+        })
+      } else {
+        return res.send({
+          success: "删除成功"
+        })
+      }
     })
 }
 exports.comment_post = function(req, res) {

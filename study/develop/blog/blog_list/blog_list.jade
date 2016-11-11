@@ -6,20 +6,18 @@ link(rel='stylesheet', href="/dist/blog_home.css", type="text/css")
 div.body
   include head
   div.content
-    if ifcurrent
-      a.btn.btn-warning.post(href="/blog/post", target="_blank") 创建一篇文章
-      //- each item, i in posts
-      //-   if user.name == item.name && i == 0
-      //-     a.btn.btn-warning.post(href="/blog/post", target="_blank") 创建一篇文章
     div.context_wrapper
       div.sidebar
         ul
           each item, i in versions
             li
-              a(href="/blog/#{item.version}") #{item.version}版本 (#{version_to_article[item.version]}篇文档)
+              a(href="/blog/#{item.version}", data-version="#{item.version}") #{item.version}版本 (#{version_to_article[item.version]}篇文档)
       div.sidebar_right
         p in 
       div.context
+        div
+          if ifcurrent
+            a.btn.btn-warning.post(href="/blog/post", target="_blank") 创建一篇文章
         div.article_wrapper
           each item, i in posts
             div.article_item(data-url="/blog/#{item.name}/#{item.time.day}/#{item.title}") 
@@ -28,12 +26,12 @@ div.body
                 if user
                   if user.name == item.name
                     a.operation.edit(href="/blog/#{item.name}/#{item.time.day}/#{item.title}/edit") 编辑
-                    a.operation.delete(href="javascript:;") 删除
+                    a.operation.delete(href="javascript:;", data-version="#{item.version}") 删除
                     span.delete_operation
                       
                       a.operation.delete_cancel(href="javascript:;") 取消
                       i.fa.fa-times-circle
-                      a.operation.delete_confirm(href="javascript:;") 确定
+                      a.operation.delete_confirm(href="javascript:;", data-version="#{item.version}") 确定
                       i.fa.fa-check-circle
               p.info 
                 日期：

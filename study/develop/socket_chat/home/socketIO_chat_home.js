@@ -17,18 +17,25 @@ $(".context").on("click", ".delete_cancel", function(event) {
 // 删除确定
 $(".context").on("click", ".delete_confirm", function(event) {
   var article_item = $(event.target).parents(".article_item");
+  var version = $(this).data("version");
+  console.log(version);
   var url = article_item.data("url") +
     "/remove";
   // var url = common.get_operate_url("remove");
   var obj = {
     url: url,
+    data: {
+      version: version
+    },
     success: function(data) {
       var message = data.error || data.success;
       alert(message);
       if (data.success) {
         article_item.remove();
-        $(".sidebar").find("[href='" + article_item.data("url") + "']")
-          .parent().remove();
+        var version = data.version;
+        $(".sidebar").find("[data-version=" + "'" + String(version) +
+          "'" + "]").text(
+          String(version) + "版本 (" + data.count + "篇文档)")
       }
     }
   }
@@ -111,47 +118,66 @@ $(".test_jade").on("click", function() {
 
 // 分页
 $(document).ready(function() {
-  var paginate = $(".paginate_wrapper .pagination");
-  var totalCountsText = $(".totalPage").text()
-  var totalCounts = totalCountsText && parseInt(/\d+/.exec(totalCountsText)[
-    0]);
-  var currentPage = 1;
-  var offset = 0;
-  var pageSize = 5;
-  var xhr = null;
-  paginate.length && totalCounts != 0 && $.jqPaginator(paginate, {
-    totalCounts: totalCounts,
-    visiblePages: 3,
-    pageSize: pageSize,
-    currentPage: currentPage,
-    onPageChange: function(num, type) {
-      // 当点击过快的时候 如果上一次请求还未结束， 将上一次的请求abort掉
-      // 这样就能避免异步带来的问题
-      xhr && xhr.abort();
-      console.log(num, type);
-      offset = pageSize * (num - 1);
-      var obj = {
-        url: location.pathname + "/slice",
-        data: {
-          offset: offset,
-          pageSize: pageSize
-        },
-        beforeSend: function() {
-          console.log("aaaa")
-        },
-        // dataType: "html",
-        success: function(data) {
-          $(".article_wrapper").html(data.content);
-          console.log(data);
-          var message = data.error || data.success;
-          if (data.success) {
+  var paginate_init = function() {
+    var paginate = $(".paginate_wrapper .pagination");
+    var totalCountsText = $(".totalPage").text()
+    var totalCounts = totalCountsText && parseInt(/\d+/.exec(
+      totalCountsText)[
+      0]);
+    var currentPage = 1;
+    var offset = 0;
+    var pageSize = 5;
+    var xhr = null;
+    paginate.length && totalCounts != 0 && $.jqPaginator(paginate, {
+      totalCounts: totalCounts,
+      visiblePages: 3,
+      pageSize: pageSize,
+      currentPage: currentPage,
+      onPageChange: function(num, type) {
+        // 当点击过快的时候 如果上一次请求还未结束， 将上一次的请求abort掉
+        // 这样就能避免异步带来的问题
+        xhr && xhr.abort();
+        console.log(num, type);
+        offset = pageSize * (num - 1);
+        var obj = {
+          url: location.pathname + "/slice",
+          data: {
+            offset: offset,
+            pageSize: pageSize
+          },
+          beforeSend: function() {
+            console.log("aaaa")
+          },
+          // dataType: "html",
+          success: function(data) {
+            $(".article_wrapper").html(data.content);
+            console.log(data);
+            var message = data.error || data.success;
+            if (data.success) {
 
+            }
           }
         }
+        xhr = common.ajax_func.call(null, obj);
       }
-      xhr = common.ajax_func.call(null, obj);
+    });
+  }
+  paginate_init();
+  $(".content").on('click', ".version_articles", function() {
+    var version = $(this).data("version");
+    var obj = {
+      url: "/blog/get_version",
+      data: {
+        offset: 0,
+        pageSize: 5,
+        version: version
+      },
+      success: function(data) {
+        $(".article_wrapper").html(data.content);
+      }
     }
-  });
+    common.ajax_func.call(null, obj);
+  })
 })
 
 

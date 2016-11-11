@@ -24,6 +24,7 @@ router.get('/:name', blog.list);
 router.post('/:name/slice', blog.list_slice);
 router.post('/home/slice', blog.list_slice);
 router.post('/create_new_version', blog.create_new_version);
+router.post('/get_version', blog.list_slice);
 // router.get('/:name/:day/:title', checkLogin);
 router.get('/:name/:day/:title', blog.listone);
 router.get('/:name/:day/:title/edit', checkLogin);
