@@ -16,9 +16,7 @@ export default {
     }
   },
   created () {
-    console.log(this.getAllProducts)
     this.getAllProducts();
-    console.log(this.getAllProductsInfo)
   },
   ready () {
 
