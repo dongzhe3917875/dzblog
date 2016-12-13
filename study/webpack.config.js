@@ -87,10 +87,10 @@ module.exports = {
   },
   plugins: [
     // new Ex('[name].css'),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require("./manifest.json")
-    }),
+    // new webpack.DllReferencePlugin({
+    //   context: __dirname,
+    //   manifest: require("./manifest.json")
+    // }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
