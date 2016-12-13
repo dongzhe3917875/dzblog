@@ -1,20 +1,24 @@
 var express = require('express');
 var path = require('path');
 var app = express();
-// var webpack = require("webpack");
-// var webpackDevMiddleware = require("webpack-dev-middleware");
-// var webpackHotMiddleware = require('webpack-hot-middleware');
-// var webpack_config = require("./webpack.config.js")
-// var compiler = webpack(webpack_config);
+var webpack = require("webpack");
+var isDev = process.env.NODE_ENV !== 'pro';
+if (isDev) {
+  var webpackDevMiddleware = require("webpack-dev-middleware");
+  var webpackHotMiddleware = require('webpack-hot-middleware');
+  var webpack_config = require("./webpack.config.js")
+  var compiler = webpack(webpack_config);
 
-// app.use(webpackDevMiddleware(compiler, {
-//     publicPath: webpack_config.output.publicPath,
-//     stats: {
-//       colors: true
-//     }
-//   }
-// ));
-// app.use(webpackHotMiddleware(compiler));
+  app.use(webpackDevMiddleware(compiler, {
+    publicPath: webpack_config.output.publicPath,
+    noInfo: true,
+    stats: {
+      colors: true
+    }
+  }));
+  app.use(webpackHotMiddleware(compiler));
+}
+app.locals.env = process.env.NODE_ENV || 'dev';
 var birds = require('./routes/bird');
 var mongo = require('mongodb');
 var monk = require('monk');
@@ -72,6 +76,7 @@ var db = monk('localhost:27017/nodetest');
 // 使用这个router来配置路由
 var router = express.Router();
 var bodyParser = require('body-parser');
+
 // 设置模板文件夹的路径
 // __dirname：开发期间，该行代码所在的目录。
 

@@ -1,4 +1,5 @@
 <template lang="jade">
+  h2 eeeeeeeeee
   div
     select-simulate(v-for="(index, item) in getInfo" v-bind:selectsingle="item.content" v-bind:index="index" v-bind:active="item.active")
   span(v-text="counterValue")

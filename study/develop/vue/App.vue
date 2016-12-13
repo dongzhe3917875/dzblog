@@ -3,7 +3,7 @@
     <component-a></component-a>
   </div>
   <p>
-    dongzhe123456
+    dongzhe123456vvv
   </p>
 </template>
 

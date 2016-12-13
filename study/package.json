@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "cross-env NODE_ENV=dev supervisor app.js",
+    "pro": "webpack --config webpack.production.config.js & cross-env NODE_ENV=pro node app"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

@@ -9,8 +9,8 @@ var select_map = new WeakMap()
 $(".imitate_select.jqselect").select({
   select_map: select_map
 })
-
-// proto changeClass demo
+console.log('yyyyyyyyyyyy')
+  // proto changeClass demo
 var dom = document.querySelector(".changeClass");
 var button = document.querySelector(".toggle");
 
@@ -19,11 +19,9 @@ var demo_options = {
 }
 changeClass.call(dom, demo_options);
 button.addEventListener("click", function(event) {
-  demo_options.changedemo = !demo_options.changedemo
-})
-
-
-// proto select demo
+    demo_options.changedemo = !demo_options.changedemo
+  })
+  // proto select demo
 var domSelect = document.querySelectorAll(".protoSelect");
 var select_map1 = new WeakMap();
 Array.prototype.slice.call(domSelect).forEach((ele) => proto_select_simulate.call(
@@ -41,3 +39,6 @@ new Vue({
     selectMuti
   }
 })
+if (module.hot) {
+  module.hot.accept();
+}

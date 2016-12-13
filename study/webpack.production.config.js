@@ -1,11 +1,11 @@
 var webpack = require('webpack');
 // var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var path = require("path");
-// var Ex = require("extract-text-webpack-plugin");
+var Ex = require("extract-text-webpack-plugin");
 var publicPath = 'http://45.62.108.67:3000/dist/';
 // var hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
-var hotMiddlewareScript =
-  'webpack-hot-middleware/client?path=http://45.62.108.67:3000/__webpack_hmr&reload=true&noInfo=false&quiet=false&timeout=2000';
+// var hotMiddlewareScript =
+//   'webpack-hot-middleware/client?path=http://45.62.108.67:3000/__webpack_hmr&reload=true&noInfo=false&quiet=false&timeout=2000';
 // var hotMiddlewareScript =
 //   'webpack-hot-middleware/client?http://45.62.108.67:3000/&noInfo=true&reload=true';
 
@@ -36,9 +36,7 @@ var hotMiddlewareScript =
 //     filename + ".js")]
 // }
 function joinjsPath(filename) {
-  return [hotMiddlewareScript, 'babel-polyfill', path.join(__dirname,
-    'public/javascripts/' +
-    filename + ".js")]
+  return path.join(__dirname, 'public/javascripts/' + filename + ".js")
 }
 module.exports = {
   // plugins: [commonsPlugin],
@@ -58,8 +56,8 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.css$/,
-      // loader: Ex.extract('style-loader', 'css-loader')
-      loader: 'style-loader!css-loader'
+      loader: Ex.extract('style-loader', 'css-loader')
+        // loader: 'style-loader!css-loader'
     }, {
       test: /\.js$/,
       loader: 'babel-loader',
@@ -78,22 +76,22 @@ module.exports = {
       // ]
     }, {
       test: /\.less$/,
-      loader: 'style-loader!css-loader!less-loader'
-        // loader: Ex.extract("style-loader", "css-loader!less-loader")
+      // loader: 'style-loader!css-loader!less-loader'
+      loader: Ex.extract("style-loader", "css-loader!less-loader")
     }, {
       test: /\.vue$/,
       loader: 'vue'
     }]
   },
   plugins: [
-    // new Ex('[name].css'),
+    new Ex('[name].css'),
     new webpack.DllReferencePlugin({
       context: __dirname,
       manifest: require("./manifest.json")
-    }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    })
+    // new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
+    // new webpack.NoErrorsPlugin()
     // 可以实现提取出来的公共打包
     // new  webpack.optimize.CommonsChunkPlugin('common.js', ['blog_home', 'datatable'])
   ],

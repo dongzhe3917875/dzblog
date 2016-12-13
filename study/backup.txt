@@ -1,0 +1,58 @@
+npm install express -g
+npm install express -g
+npm install express-generator -g
+sudo npm install express-generator -g
+npm install express-generator -g
+npm install
+npm install
+npm install gulp --save-dev
+npm install gulp -g
+npm install
+npm install
+sudo npm install forever -g
+npm install forever -g
+npm install --save-dev gulp-watch-less
+npm install --save-dev gulp-sftp
+npm install
+npm install --save-dev gulp-handlebars
+npm install --save-dev gulp-wrap
+npm install --save-dev gulp-declare
+npm install --save-dev gulp-concat
+npm install --save-dev markdown
+npm install --save-dev concat-flash
+npm install --save-dev connect-flash
+npm install --save-dev multer
+npm install --save-dev websocket
+npm install bower -g
+npm install --save-dev webpack
+npm install -g webpack
+npm install -g babel-loader
+npm install -g webpack
+npm install --save-dev babel-loader
+npm install --save-dev babel-core
+npm install --save-dev supervisor
+npm install\\n  webpack webpack-dev-server\\n  vue-loader vue-html-loader css-loader vue-style-loader vue-hot-reload-api\\n  babel-loader babel-core babel-plugin-transform-runtime babel-preset-es2015\\n  babel-runtime\\n  --save-dev
+npm install vue --save
+npm install --save-dev webpack-dev-middleware
+npm install --save-dev vue-hot-reload-api
+npm install --save-dev webpack-hot-middleware
+npm install extract-text-webpack-plugin --save-dev
+npm install style-loader --save-dev
+npm install vuex
+npm install vuex --save-dev
+npm install vuex@1.0 --save
+npm install vuex@1.0.0 --save
+npm install vue-hot-reload-api@^1.2.0 --save-dev
+npm install vuex@0.6.3 --save
+npm install vuex@0.6.3 --save-dev
+npm install vuex@1.0.0 --save-dev
+npm install
+npm install vue-router -g
+npm install vue-router@1.0 -g
+npm install vue-router@0.7.13 -g
+npm install --save-dev vue-router@0.7.13
+npm install reqwest --save-dev
+npm install --save-dev xhr2
+npm install --global babel-cli
+npm install babel-polyfill --save-dev
+npm install webpack --save-dev
