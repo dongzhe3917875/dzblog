@@ -1,9 +1,0 @@
-{
-  "type": "sftp",
-  "host": "45.62.108.67",
-  "username": "dongzhe",
-  "password": "qAZabc123!@#",
-  "port": 26667,
-  "remotePath": "/usr/local/dzblog/dzblog/study",
-  "uploadOnSave": true
-}
