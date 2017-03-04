@@ -31,25 +31,34 @@ exports.apiTest = function(req, res) {
   var properties = [{
     name: 'color',
     current: 0,
-    data: ['red', 'green', 'yellow']
+    type: ['red', 'green', 'yellow'],
+    type_cn: ['红色', '绿色', '黄色']
   }, {
     name: 'size',
     current: 1,
-    data: ['M', 'L', 'XL', 'XXL']
+    type: ['M', 'L', 'XL', 'XXL'],
+    type_cn: ['M', 'L', 'XL', 'XXL']
   }, {
     name: 'quality',
     current: 2,
-    data: ['NORMAL', 'GOOD', 'EXCELLENT']
+    type: ['NORMAL', 'GOOD', 'EXCELLENT'],
+    type_cn: ['正常', '好', '非常好']
   }]
   var cost = 0;
   console.log(price)
   properties.forEach(ele => {
-    cost = cost + price[ele.name].basic * price[ele.name][ele.data[ele.current]]
+    cost = cost + price[ele.name].basic * price[ele.name][ele.type[ele.current]]
   })
   console.log(cost)
   res.send({
-    properties,
-    cost
+    res: {
+      properties: properties,
+      price: cost,
+      navigation_img: 'img/navigation.jpg',
+      thumbnails: 'img/thumbnails.jpg',
+      name: 'G-STEP冬季卫衣',
+      unit: '1'
+    }
   });
 }
 
@@ -59,6 +68,13 @@ exports.numberInfo = function(req, res) {
     currentNum: 1,
     min: 1,
     max: 20
+  })
+}
+exports.makeOrder = function(req, res) {
+  res.header("Content-Type", "application/json;charset=utf-8");
+  console.log(req.query.ids)
+  res.send({
+    code: 0
   })
 }
 
@@ -73,6 +89,28 @@ exports.getPrice = function(req, res) {
   cost = cost * num;
   res.header("Content-Type", "application/json;charset=utf-8");
   res.send({
-    cost: cost
+    res: {
+      price: cost
+    }
+  })
+}
+
+
+exports.addCart = function(req, res) {
+  var cost = 0;
+  var num = req.body.num;
+  delete req.body.num;
+  for (var item in req.body) {
+    cost = cost + price[item].basic * price[item][req.body[item]]
+  }
+  cost = cost * num;
+  res.header("Content-Type", "application/json;charset=utf-8");
+  res.send({
+    res: {
+      message: 'add success',
+      cart_id: '123465789542525',
+      seed_id: 'dfsadfasdf',
+      cart_count: 10
+    }
   })
 }
